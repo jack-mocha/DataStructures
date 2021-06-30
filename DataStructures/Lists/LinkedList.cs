@@ -7,6 +7,7 @@ namespace DataStructures.Lists
     {
         private Node _first;
         private Node _last;
+        private int _count;
 
         private bool IsEmpty()
         {
@@ -20,10 +21,15 @@ namespace DataStructures.Lists
             //when there is no node in the list.
             if (IsEmpty())
                 _first = _last = node;
+            else
+            {
+                //when there is at least one node in the list.
+                _last._next = node;
+                _last = node;
+            }
 
-            //when there is at least one node in the list.
-            _last._next = node;
-            _last = node;
+            //Increment _count
+            this._count++;
         }
 
         public void AddFirst(int value)
@@ -33,10 +39,15 @@ namespace DataStructures.Lists
             //when there is no node in the list.
             if (IsEmpty())
                 _first = _last = node;
-           
-            //when there is at least one node in the list.
-            node._next = _first;
-            _first = node;
+            else
+            {
+                //when there is at least one node in the list.
+                node._next = _first;
+                _first = node;
+            }
+
+            //Increment _count
+            this._count++;
         }
 
         public bool Contains(int value)
@@ -73,26 +84,190 @@ namespace DataStructures.Lists
             return -1;
         }
 
+        public int Size()
+        {
+            return this._count;
+        }
+
         public void DeleteFirst()
         {
+            //Empty list.
+            if (IsEmpty())
+                throw new ArgumentOutOfRangeException();
+
+            //Only has 1 element.
             if (this._first == this._last)
                 this._first = this._last = null;
+            else
+            {
+                //More than 1 elements.
+                var second = _first._next;
+                _first._next = null;
+                _first = second;
+            }
 
-            var temp = this._first;
-            _first = _first._next;
-            temp._next = null;
+            this._count--;
         }
 
         public void DeleteLast()
         {
+            //Empty list.
+            if (IsEmpty())
+                throw new ArgumentOutOfRangeException();
+
+            //Only has 1 node.
             if (this._first == this._last)
                 this._first = this._last = null;
+            else
+            {
+                //Has more than 1 nodes.
+                var previous = GetPrevious(this._last);
+                _last = previous;
+                previous._next = null;
+            }
 
+            this._count--;
+        }
+
+        public int[] ToArray()
+        {
+            int[] array = new int[this._count];
             var current = this._first;
-            while(current._next != _last)
-                current = current._next;
+            var idx = 0;
 
-            current._next = null;
+            while(current != null)
+            {
+                array[idx++] = current._value;
+                current = current._next;
+            }
+
+            return array;
+
+        }
+
+        public void Reverse()
+        {
+            //Empty list.
+            if (IsEmpty())
+                return;
+
+            var previous = this._first;
+            var current = this._first._next;
+            while(current != null)
+            {
+                var next = current._next;
+                current._next = previous;
+                previous = current;
+                current = next;
+            }
+
+            this._last = this._first;
+            this._last._next = null;
+            _first = previous;
+        }
+
+        public int GetKthNodeFromEnd (int k)
+        {
+            if (k <= 0 || k > this._count)
+                throw new ArgumentOutOfRangeException();
+
+            var p2 = this._first;
+            for (int i = 1; i <= k - 1; i++)
+                p2 = p2._next;
+
+            var p1 = this._first;
+            while(p2 != this._last)
+            {
+                p1 = p1._next;
+                p2 = p2._next;
+            }
+
+            return p1._value;
+
+        }
+
+        public void PrintMiddle()
+        {
+            if (IsEmpty())
+                throw new ArgumentOutOfRangeException();
+
+            var p1 = this._first;
+            var p2 = this._first;
+
+            while(p2 != null)
+            {
+                if(p2._next != null)
+                {
+                    if(p2._next._next == null)
+                        Console.WriteLine(p1._value);
+                    p2 = p2._next._next;
+                    p1 = p1._next;
+                }
+                else
+                    p2 = p2._next;
+            }
+         
+            Console.WriteLine(p1._value);
+        }
+
+        public void PrintMiddleCleaner()
+        {
+            if (IsEmpty())
+                throw new ArgumentOutOfRangeException();
+
+            var p1 = this._first;
+            var p2 = this._first;
+
+            while(p2 != _last && p2._next != _last)
+            {
+                p1 = p1._next;
+                p2 = p2._next._next;
+            }
+
+            if (p2 == _last)
+                Console.WriteLine(p1._value);
+            else
+                Console.WriteLine(p1._value + ", " + p1._next._value);
+        }
+
+
+        public bool HasLoop()
+        {
+            var slow = this._first;
+            var fast = this._first;
+
+            while(fast != null && fast._next != null)
+            {
+                slow = slow._next;
+                fast = fast._next._next;
+
+                if (slow == fast)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public void Print()
+        {
+            var current = this._first;
+            while (current != null)
+            {
+                Console.WriteLine(current._value);
+                current = current._next;
+            }
+        }
+
+        private Node GetPrevious(Node node)
+        {
+            var current = this._first;
+            while(current != null)
+            {
+                if (current._next == node) return current;
+                current = current._next;
+            }
+
+            return null;
         }
 
         private class Node

@@ -1,11 +1,16 @@
 ﻿using DataStructures.Arrays;
 using DataStructures.Arrays.Example1;
+using System;
+
 namespace DataStructures
 {
     class Program
     {
         static void Main(string[] args)
         {
+            var a = new ArrayBasic();
+            a.Note();
+
             int[][] arr = new int[3][]
             {
                 new int[] {1, 2},
@@ -20,5 +25,7 @@ namespace DataStructures
             System.Console.WriteLine(ja.ToString(n2));
             ja.Note();
         }
+
+
     }
 }

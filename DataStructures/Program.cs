@@ -7,13 +7,18 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            var que = new StackQueue();
-
+            var que = new PriorityQueue(5);
             que.Enqueue(1);
+            que.Enqueue(5);
             que.Enqueue(2);
-            que.Enqueue(3);
+            que.Enqueue(0);
+            que.Enqueue(10);
+            Console.WriteLine(que.ToString());
             que.Dequeue();
-            Console.WriteLine(que.Peek());
+            que.Dequeue();
+            que.Dequeue();
+            Console.WriteLine(que.ToString());
+
         }
     }
 }

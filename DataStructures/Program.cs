@@ -1,5 +1,6 @@
 ﻿using DataStructures.Queues;
 using System;
+using System.Collections.Generic;
 
 namespace DataStructures
 {
@@ -14,11 +15,15 @@ namespace DataStructures
             que.Enqueue(0);
             que.Enqueue(10);
             Console.WriteLine(que.ToString());
-            que.Dequeue();
-            que.Dequeue();
-            que.Dequeue();
-            Console.WriteLine(que.ToString());
 
+            var q = new Queue<int>();
+            q.Enqueue(1);
+            q.Enqueue(2);
+            q.Enqueue(3);
+            q.Enqueue(4);
+            q.Enqueue(5);
+            var rq = new QueueReverser();
+            rq.Reverse(q, 0);
         }
     }
 }

@@ -270,6 +270,43 @@ namespace DataStructures.Lists
             return null;
         }
 
+        public void TraverseOdd()
+        {
+            var p1 = _first;
+            while(p1 != null && p1._next != null)
+            {
+                Console.WriteLine(p1._value);
+                p1 = p1._next._next;
+            }
+        }
+
+        public void TraverseEven()
+        {
+            if (_first == null)
+                return;
+
+            var p1 = _first._next;
+            while (p1 != null && p1._next != null)
+            {
+                Console.WriteLine(p1._value);
+                p1 = p1._next._next;
+            }
+        }
+
+        public void SeparteByAlternate()
+        {
+            var previous = _first;
+            var current = _first._next;
+            var headOfEven = _first._next;
+            while(current != null)
+            {
+                var next = current._next;
+                previous._next = next;
+                previous = current;
+                current = next;
+            }
+        }
+
         private class Node
         {
             public int _value { get; private set; }

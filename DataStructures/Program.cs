@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataStructures.HashTables;
+using System;
+using System.Collections.Generic;
 
 namespace DataStructures
 {
@@ -6,7 +8,10 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            char b = Char.MinValue;
+            var d = new CharFinder();
+            var r = d.CleanerFirstNonRepeatedChar("aa bbcc");
+
         }
     }
 }

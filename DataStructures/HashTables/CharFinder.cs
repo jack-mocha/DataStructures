@@ -65,5 +65,34 @@ namespace DataStructures.HashTables
 
             return Char.MinValue;
         }
+
+        public char FirstRepeatedChar(string content)
+        {
+            var set = new HashSet<char>();
+
+            foreach(var c in content)
+            {
+                if (set.Contains(c))
+                    return c;
+                else
+                    set.Add(c);
+            }
+
+            return Char.MinValue;
+        }
+
+        public int Hash(int key)
+        {
+            return key % 100;
+        }
+
+        public int Hash(string key)
+        {
+            var hash = 0;
+            foreach (var k in key)
+                hash += k;
+
+            return hash % 100;
+        }
     }
 }

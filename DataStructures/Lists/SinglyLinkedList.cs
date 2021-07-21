@@ -41,6 +41,10 @@ namespace DataStructures.Lists
             return _head == null;
         }
 
+        /// <summary>
+        /// Merged 2 already sorted lists. The result is still sorted.
+        /// </summary>
+        /// <param name="lst"></param>
         public void SortedMerge(SinglyLinkedList lst)
         {
             if (lst == null)

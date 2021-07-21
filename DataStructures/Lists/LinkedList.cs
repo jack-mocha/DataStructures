@@ -312,6 +312,12 @@ namespace DataStructures.Lists
             }
         }
 
+        /// <summary>
+        /// Merge 2 lists by alternating nodes.
+        /// </summary>
+        /// <param name="l1"></param>
+        /// <param name="l2"></param>
+        /// <returns></returns>
         public LinkedList AlternateMerge(LinkedList l1, LinkedList l2)
         {
             var n1 = l1._first;

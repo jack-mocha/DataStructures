@@ -293,11 +293,16 @@ namespace DataStructures.Lists
             }
         }
 
+        /// <summary>
+        /// Split one list into 2 lists:
+        /// headOfEven and headOfOdd
+        /// </summary>
         public void SeparteByAlternate()
         {
             var previous = _first;
             var current = _first._next;
             var headOfEven = _first._next;
+            var headOfOdd = _first;
             while(current != null)
             {
                 var next = current._next;
@@ -305,6 +310,49 @@ namespace DataStructures.Lists
                 previous = current;
                 current = next;
             }
+        }
+
+        public LinkedList AlternateMerge(LinkedList l1, LinkedList l2)
+        {
+            var n1 = l1._first;
+            var n2 = l2._first;
+            var dummy = new Node(0);
+            var tail = dummy;
+
+            while(true)
+            {
+                if(n1 == null)
+                {
+                    tail._next = n2;
+                    tail = n2 == null ? tail : l2._last;
+                    break;
+                }
+
+                if(n2 == null)
+                {
+                    tail._next = n1;
+                    tail = n1 == null ? tail : l1._last;
+                    break;
+                }
+
+                tail._next = n1;
+                tail = tail._next;
+                n1 = n1._next;
+
+                tail._next = n2;
+                tail = tail._next;
+                n2 = n2._next;
+            }
+
+            var head = dummy._next;
+            dummy._next = null;
+
+            var merged = new LinkedList();
+            merged._first = head;
+            merged._last = tail;
+            merged._count = l1._count + l2._count;
+
+            return merged;
         }
 
         private class Node

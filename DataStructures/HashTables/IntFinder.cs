@@ -33,5 +33,41 @@ namespace DataStructures.HashTables
 
             return res;
         }
+
+        public int CountPairsWithDiff(int[] numbers, int difference)
+        {
+            var set = new HashSet<int>();
+            foreach (var n in numbers)
+                set.Add(n);
+
+            var count = 0;
+            for(int i = 0; i < numbers.Length; i++)
+            {
+                if (set.Contains(numbers[i] + difference))
+                    count++;
+                if (set.Contains(numbers[i] - difference))
+                    count++;
+                set.Remove(numbers[i]);
+            }
+
+            return count;
+        }
+
+        public int[] TwoSum(int[] numbers, int target)
+        {
+            var map = new Dictionary<int, int>();
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                int complement = target - numbers[i];
+                if (map.ContainsKey(complement))
+                {
+                    return new int[] { map[complement], i };
+                }
+                map.Add(numbers[i], i);
+            }
+
+            return null;
+        }
     }
 }

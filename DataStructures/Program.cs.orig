@@ -1,0 +1,48 @@
+<<<<<<< HEAD
+﻿using DataStructures.Arrays;
+using DataStructures.Arrays.Example1;
+=======
+﻿using DataStructures.Lists;
+>>>>>>> lists
+using System;
+
+namespace DataStructures
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+<<<<<<< HEAD
+            var a = new ArrayBasic();
+            a.Note();
+
+            int[][] arr = new int[3][]
+            {
+                new int[] {1, 2},
+                new int[] {3, 4},
+                new int[] {5, 6}
+            };
+            var ja = new JaggedArray();
+            System.Console.WriteLine(ja.ToString(arr));
+            var n = ja.MatrixReshape(arr, 2, 3);
+            System.Console.WriteLine(ja.ToString(n));
+            var n2 = ja.MatrixReshapeBetter(arr, 2, 3);
+            System.Console.WriteLine(ja.ToString(n2));
+            ja.Note();
+=======
+            var lst = new SinglyLinkedList();
+            //lst.AddLast(1);
+            //lst.AddLast(3);
+            //lst.AddLast(4);
+            var l2 = new SinglyLinkedList();
+            //l2.AddLast(2);
+            //l2.AddLast(5);
+            //l2.AddLast(10);
+            lst.SortedMerge(null);
+            lst.Print();
+>>>>>>> lists
+        }
+
+
+    }
+}

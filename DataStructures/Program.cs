@@ -1,5 +1,6 @@
 ﻿using DataStructures.Lists;
 using System;
+using System.Collections.Generic;
 
 namespace DataStructures
 {
@@ -7,14 +8,12 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            var lst = new SinglyLinkedList();
+            var lst = new LinkedList();
             lst.AddLast(1);
             lst.AddLast(2);
-            lst.AddLast(3);
             lst.AddLast(4);
             lst.AddLast(5);
-            lst.Print();
-            lst.ShiftLinkedList(-1);
+            lst.Insert(1, 3);
             lst.Print();
         }
     }

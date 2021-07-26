@@ -361,6 +361,54 @@ namespace DataStructures.Lists
             return merged;
         }
 
+        public void Remove(int value)
+        {
+            if (IsEmpty())
+                throw new InvalidOperationException();
+
+            //when head is the target value
+            if (_first._value == value)
+            {
+                _first = _first._next;
+                return;
+            }
+
+            var current = _first._next;
+            Node prev = _first;
+            while(current != null && current._value != value)
+            {
+                prev = prev._next;
+                current = current._next;
+            }
+
+            //Target Not Found
+            if (current == null)
+                return;
+
+            prev._next = current._next;
+            current._next = null;
+            _count--;
+        }
+
+        public void Insert(int index, int value)
+        {
+            if (index < 0 || index > _count)
+                throw new InvalidOperationException();
+
+            if (index == 0)
+            {
+                AddFirst(value);
+                return;
+            }
+
+            var node = new Node(value);
+            var current = _first;
+            for(int i = 0; i < index - 1; i ++)
+                current = current._next;
+            node._next = current._next;
+            current._next = node;
+        }
+
         private class Node
         {
             public int _value { get; private set; }

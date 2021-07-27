@@ -361,6 +361,32 @@ namespace DataStructures.Lists
             return merged;
         }
 
+        public void RemoveAt(int index)
+        {
+            if (IsEmpty() || index < 0 || index >= _count)
+                throw new InvalidOperationException();
+
+            if(index == 0)
+            {
+                var second = _first._next;
+                _first._next = null;
+                _first = second;
+                _count--;
+                return;
+            }
+
+            var current = _first;
+            Node prev = null;
+            for(int i = 0; i < index; i++)
+            {
+                prev = current;
+                current = current._next;
+            }
+
+            prev._next = current._next;
+            _count--;
+        }
+
         public void Remove(int value)
         {
             if (IsEmpty())
@@ -369,7 +395,10 @@ namespace DataStructures.Lists
             //when head is the target value
             if (_first._value == value)
             {
+                var temp = _first;
                 _first = _first._next;
+                temp._next = null;
+                _count--;
                 return;
             }
 

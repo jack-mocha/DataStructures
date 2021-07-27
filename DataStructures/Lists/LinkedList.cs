@@ -448,6 +448,52 @@ namespace DataStructures.Lists
             return merged;
         }
 
+        public void RemoveDuplicatesSorted()
+        {
+            if (IsEmpty())
+                return;
+
+            var slow = _first;
+            var fast = _first._next;
+            while(fast != null)
+            {
+                if(fast._value == slow._value)
+                {
+                    while (fast != null && fast._value == slow._value) //Advance until not duplicate
+                        fast = fast._next;
+
+                    slow._next = fast;
+                    if (fast == null)
+                        return;
+                }
+
+                slow = slow._next;
+                fast = fast._next;
+            }
+        }
+
+        /// <summary>
+        /// Traverse the list. If the next is the same as current, delete next.
+        /// </summary>
+        public void RemoveDuplicatesSortedCleaner()
+        {
+            if (IsEmpty())
+                return;
+
+            var current = _first;
+            while(current != null)
+            {
+                var next = current._next;
+                if(next != null && next._value == current._value)
+                {
+                    current._next = next._next;
+                    next._next = null;
+                }
+                else
+                    current = current._next;
+            }
+        }
+
         public void RemoveAt(int index)
         {
             if (IsEmpty() || index < 0 || index >= _count)

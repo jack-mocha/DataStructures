@@ -248,6 +248,38 @@ namespace DataStructures.Lists
             return false;
         }
 
+        /// <summary>
+        /// If there is a loop, start counting until the pointer reaches the same node.
+        /// </summary>
+        /// <returns></returns>
+        public int GetLengthOfLoop()
+        {
+            var slow = _first;
+            var fast = _first;
+
+            while(fast != null && fast._next != null)
+            {
+                slow = slow._next;
+                fast = fast._next._next;
+                return GetLoopeLength(slow);
+            }
+
+            return 0;
+        }
+
+        private int GetLoopeLength(Node node)
+        {
+            var current = node;
+            var count = 1;
+            while(current._next != node)
+            {
+                count++;
+                current = current._next;
+            }
+
+            return count;
+        }
+
         public void Print()
         {
             var current = this._first;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace DataStructures.Lists
@@ -208,6 +209,60 @@ namespace DataStructures.Lists
             }
          
             Console.WriteLine(p1._value);
+        }
+
+        /// <summary>
+        /// This approach stores the second half of the list into a stack.
+        /// You can also store the whole list into a stack: Easier implementation, but waste more space.
+        /// 2nd approach is to reverse the second half of the list > check with the first half > reverse it back.
+        /// 3ed approach is to use recursion.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsPalindrome()
+        {
+            if (IsEmpty())
+                throw new InvalidOperationException();
+            if (_first._next == null)
+                return true;
+
+            var slow = _first;
+            var fast = _first;
+
+            while(fast._next != null && fast._next._next != null)
+            {
+                slow = slow._next;
+                fast = fast._next._next;
+            }
+
+            var stk = new Stack<Node>();
+            if(fast._next == null)
+            {
+                var current = slow._next._next;
+                while(current != null)
+                {
+                    stk.Push(current);
+                    current = current._next;
+                }
+            }
+            else
+            {
+                var current = slow._next;
+                while (current != null)
+                {
+                    stk.Push(current);
+                    current = current._next;
+                }
+            }
+
+            var node = _first;
+            while(stk.Count != 0)
+            {
+                if (stk.Pop()._value != node._value)
+                    return false;
+                node = node._next;
+            }
+
+            return true;
         }
 
         public void PrintMiddleCleaner()

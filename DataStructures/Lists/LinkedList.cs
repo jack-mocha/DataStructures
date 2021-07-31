@@ -285,6 +285,89 @@ namespace DataStructures.Lists
                 Console.WriteLine(p1._value + ", " + p1._next._value);
         }
 
+        /// <summary>
+        /// x and y may or may not be adjacent.
+        /// Either x or y may be a head node.
+        /// Either x or y may be the last node.
+        /// x and/or y may not be present in the linked list.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public void SwapNodes(int x, int y)
+        {
+            if (IsEmpty())
+                throw new InvalidOperationException();
+
+            if (x == y)
+                return;
+
+            // Search for x (keep track of prevX and CurrX)
+            Node p1 = null, c1 = _first;
+            while (c1 != null && c1._value != x)
+            {
+                p1 = c1;
+                c1 = c1._next;
+            }
+
+            // Search for y (keep track of prevY and currY)
+            Node p2 = null, c2 = _first;
+            while (c2 != null && c2._value != y)
+            {
+                p2 = c2;
+                c2 = c2._next;
+            }
+
+            // If either x or y is not present, nothing to do
+            if (c1 == null || c2 == null)
+                return;
+
+            // If x is not head of linked list
+            if (p1 != null)
+                p1._next = c2;
+            else // make y the new head
+                _first = c2;
+
+            // If y is not head of linked list
+            if (p2 != null)
+                p2._next = c1;
+            else // make x the new head
+                _first = c1;
+
+            // Swap next pointers
+            Node temp = c1._next;
+            c1._next = c2._next;
+            c2._next = temp;
+        }
+
+        public void PairwiseSwapNode()
+        {
+            var current = _first;
+            Node previous = null;
+            while (current != null && current._next != null)
+            {
+                SwapNode(previous, current, current, current._next);
+
+                previous = current;
+                current = current._next;
+            }
+        }
+
+        private void SwapNode(Node p1, Node c1, Node p2, Node c2)
+        {
+            if (p1 == null)
+                _first = c2;
+            else
+                p1._next = c2;
+
+            if (p2 == null)
+                _first = c1;
+            else
+                p2._next = p2;
+
+            var temp = c1._next;
+            c1._next = c2._next;
+            c2._next = temp;
+        }
 
         public bool HasLoop()
         {

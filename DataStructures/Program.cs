@@ -9,9 +9,9 @@ namespace DataStructures
         static void Main(string[] args)
         {
             var c = new CircularLinkedList();
-            c.PushHead(1);
-            c.PushHead(2);
-            c.PushHead(3);
+            c.Push(1);
+
+            c.SplitInHalf();
 
             var lst = new LinkedList();
             lst.AddLast(2);

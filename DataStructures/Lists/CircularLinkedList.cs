@@ -60,5 +60,32 @@ namespace DataStructures.Lists
             _first = node;
         }
 
+        public void SplitInHalf()
+        {
+            var slow = _first;
+            var fast = _first;
+
+            while(fast.Next != _first && fast.Next.Next != _first)
+            {
+                slow = slow.Next;
+                fast = fast.Next.Next;
+            }
+
+            Node head1 = _first;
+            Node head2 = null;
+            //Even counts
+            if(fast.Next.Next == _first)
+            {
+                head2 = slow.Next;
+                fast.Next.Next = head2;
+                slow.Next = head1;
+            }
+            else //Odd counts
+            {
+                head2 = slow.Next;
+                fast.Next = head2;
+                slow.Next = head1;
+            }
+        }
     }
 }

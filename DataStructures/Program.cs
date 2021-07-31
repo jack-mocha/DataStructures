@@ -8,13 +8,16 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
+            var c = new CircularLinkedList();
+            c.PushHead(1);
+            c.PushHead(2);
+            c.PushHead(3);
+
             var lst = new LinkedList();
-            lst.AddLast(1);
             lst.AddLast(2);
-            lst.AddLast(3);
-            lst.AddLast(4);
-            lst.AddLast(5);
-            lst.PairwiseSwapNode();
+            lst.AddLast(2);
+            lst.AddLast(2);
+            lst.SegregateEvenAndOdd();
             lst.Print();
         }
     }

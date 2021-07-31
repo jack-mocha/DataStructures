@@ -386,6 +386,43 @@ namespace DataStructures.Lists
             return false;
         }
 
+        public void SegregateEvenAndOdd()
+        {
+            var current = _first;
+            var even = new Node(-1);
+            var e1 = even;
+            var odd = new Node(-1);
+            var o1 = odd;
+            while(current != null)
+            {
+                if(current._value % 2 == 0)
+                {
+                    e1._next = current;
+                    e1 = e1._next;
+                }
+                else
+                {
+                    o1._next = current;
+                    o1 = o1._next;
+                }
+
+                current = current._next;
+            }
+
+            if(even._next != null)
+            {
+                _first = even._next;
+                e1._next = odd._next;
+                o1._next = null;
+            }
+            else
+            {
+                _first = odd._next;
+                o1._next = even._next;
+                e1._next = null;
+            }
+        }
+
         /// <summary>
         /// If there is a loop, start counting until the pointer reaches the same node.
         /// </summary>

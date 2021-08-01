@@ -113,5 +113,41 @@ namespace DataStructures.Lists
                     current = current.Next;
             } while (current != _last.Next);
         }
+
+        public void Delete(int value)
+        {
+            if (IsEmpty())
+                throw new InvalidOperationException();
+
+            if(_first.Value == value)
+            {
+                _last.Next = _first.Next;
+                _first.Next = null;
+                _first = _last.Next;
+                return;
+            }
+
+            var current = _first;
+            Node previous = null;
+
+            do
+            {
+                if(current.Value != value)
+                {
+                    previous = current;
+                    current = current.Next;
+                }
+                else
+                {
+                    previous.Next = current.Next;
+                    current.Next = null;
+                    
+                    if(current == _last)
+                        _last = previous;
+
+                    return;
+                }
+            } while (current != _first);
+        }
     }
 }

@@ -34,6 +34,7 @@ namespace DataStructures.Lists
             {
                 _first = node;
                 node.Next = node;
+                _last = node;
                 return;
             }
 
@@ -121,9 +122,18 @@ namespace DataStructures.Lists
 
             if(_first.Value == value)
             {
-                _last.Next = _first.Next;
-                _first.Next = null;
-                _first = _last.Next;
+                if(_first == _last) //only when we need to maintain the _last pointer
+                {
+                    _first = null;
+                    _last = null;
+                }
+                else
+                {
+                    _last.Next = _first.Next;
+                    _first.Next = null;
+                    _first = _last.Next;
+                }
+
                 return;
             }
 
@@ -142,7 +152,7 @@ namespace DataStructures.Lists
                     previous.Next = current.Next;
                     current.Next = null;
                     
-                    if(current == _last)
+                    if(current == _last) //When the target it the last node
                         _last = previous;
 
                     return;

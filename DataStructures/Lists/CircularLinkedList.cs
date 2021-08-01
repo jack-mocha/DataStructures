@@ -18,6 +18,7 @@ namespace DataStructures.Lists
         }
 
         Node _first;
+        Node _last;
         
         public bool IsEmpty()
         {
@@ -40,6 +41,7 @@ namespace DataStructures.Lists
             while (current.Next != _first)
                 current = current.Next;
             current.Next = node;
+            _last = node;
         }
 
         public void PushHead(int value)
@@ -55,7 +57,10 @@ namespace DataStructures.Lists
                 current.Next = node;
             }
             else
+            {
                 node.Next = node;
+                _last = node;
+            }
 
             _first = node;
         }
@@ -86,6 +91,27 @@ namespace DataStructures.Lists
                 fast.Next = head2;
                 slow.Next = head1;
             }
+        }
+
+        public void Insert(int value, int item)
+        {
+            var node = new Node(value);
+            var current = _last.Next;
+            do
+            {
+                if (current.Value == item)
+                {
+                    node.Next = current.Next;
+                    current.Next = node;
+
+                    if (current == _last)
+                        _last = node;
+
+                    return;
+                }
+                else
+                    current = current.Next;
+            } while (current != _last.Next);
         }
     }
 }

@@ -10,8 +10,8 @@ namespace DataStructures
         {
             var c = new CircularLinkedList();
             c.Push(1);
-            c.Delete(1);
-
+            c.Push(2);
+            c.SwapFirstAndLast();
 
             var lst = new LinkedList();
             lst.AddLast(2);

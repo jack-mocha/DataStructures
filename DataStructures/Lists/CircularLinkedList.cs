@@ -159,5 +159,40 @@ namespace DataStructures.Lists
                 }
             } while (current != _first);
         }
+
+        public int Count()
+        {
+            if (IsEmpty())
+                return 0;
+
+            var current = _first;
+            var count = 0;
+            do
+            {
+                count++;
+                current = current.Next;
+            } while (current != _first);
+
+            return count;
+        }
+
+        public void SwapFirstAndLast()
+        {
+            var previous = _first;
+
+            if(_first.Next.Next == _first)
+            {
+                _first = _first.Next;
+                return;
+            }
+
+            while (previous.Next != _first && previous.Next.Next != _first)
+                previous = previous.Next;
+
+            previous.Next.Next = _first.Next;
+            _first.Next = previous.Next;
+            previous.Next = _first;
+            _first = _first.Next;
+        }
     }
 }

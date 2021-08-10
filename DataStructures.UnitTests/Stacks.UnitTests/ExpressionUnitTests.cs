@@ -27,5 +27,28 @@ namespace DataStructures.UnitTests.Stacks.UnitTests
 
             Assert.That(result, Is.EqualTo(expectedResult));
         }
+
+        [Test]
+        [TestCase("a+b*(c^d-e)^(f+g*h)-i", "abcd^e-fgh*+^*+i-")]
+        public void InfixToPostfix_WhenCalled_ReturnPostfix(string input, string expectedResult)
+        {
+            var e = new Expression();
+
+            var result = e.InfixToPostfix(input);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        [TestCase("*+AB-CD", "((A+B)*(C-D))")]
+        [TestCase("*-A/BC-/AKL", "((A-(B/C))*((A/K)-L))")]
+        public void PrefixToInfix_WhenCalled_ReturnInfix(string input, string expectedResult)
+        {
+            var e = new Expression();
+
+            var result = e.PrefixToInfix(input);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
     }
 }

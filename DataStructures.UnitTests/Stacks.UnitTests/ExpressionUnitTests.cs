@@ -50,5 +50,17 @@ namespace DataStructures.UnitTests.Stacks.UnitTests
 
             Assert.That(result, Is.EqualTo(expectedResult));
         }
+
+        [Test]
+        [TestCase("*+AB-CD", "AB+CD-*")]
+        [TestCase("*-A/BC-/AKL", "ABC/-AK/L-*")]
+        public void PrefixToPostfix_WhenCalled_ReturnPostfix(string input, string expectedResult)
+        {
+            var e = new Expression();
+
+            var result = e.PrefixToPostfix(input);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
     }
 }

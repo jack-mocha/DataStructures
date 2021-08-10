@@ -6,6 +6,25 @@ namespace DataStructures.Stacks
 {
     public class Expression
     {
+        public string PostfixToInfix(string input)
+        {
+            var stk = new Stack<string>();
+            foreach(var c in input)
+            {
+                if (Char.IsLetterOrDigit(c))
+                    stk.Push(c.ToString());
+                else if(IsOperator(c))
+                {
+                    var first = stk.Pop();
+                    var second = stk.Pop();
+                    var temp = "(" + second + c + first + ")";
+                    stk.Push(temp);
+                }
+            }
+
+            return stk.Pop();
+        }
+
         public string PostfixToPrefix(string input)
         {
             var stk = new Stack<string>();

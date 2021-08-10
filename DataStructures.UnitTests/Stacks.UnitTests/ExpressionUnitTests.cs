@@ -74,5 +74,17 @@ namespace DataStructures.UnitTests.Stacks.UnitTests
 
             Assert.That(result, Is.EqualTo(expectedResult));
         }
+
+        [Test]
+        [TestCase("abc++", "(a+(b+c))")]
+        [TestCase("ab*c+", "((a*b)+c)")]
+        public void PostfixToInfix_WhenCalled_ReturnInfix(string input, string expectedResult)
+        {
+            var e = new Expression();
+
+            var result = e.PostfixToInfix(input);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
     }
 }

@@ -86,5 +86,19 @@ namespace DataStructures.UnitTests.Stacks.UnitTests
 
             Assert.That(result, Is.EqualTo(expectedResult));
         }
+
+
+        [Test]
+        [TestCase("A*B+C/D", "+*AB/CD")]
+        [TestCase("(A-B/C)*(A/K-L)", "*-A/BC-/AKL")]
+        [TestCase("(A-B^C)*(A/K-L)", "*-A^BC-/AKL")]
+        public void InfixToPrefix_WhenCalled_ReturnPrefix(string input, string expectedResult)
+        {
+            var e = new Expression();
+
+            var result = e.InfixToPrefix(input);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
     }
 }

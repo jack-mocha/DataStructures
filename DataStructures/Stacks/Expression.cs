@@ -99,6 +99,64 @@ namespace DataStructures.Stacks
             return false;
         }
 
+        public string InfixToPrefix(string input)
+        {
+            var arr = input.ToCharArray();
+            Array.Reverse(arr);
+            for(int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] == '(')
+                    arr[i] = ')';
+                else if (arr[i] == ')')
+                    arr[i] = '(';
+            }
+
+            var temp = InfixToPostfix(arr).ToCharArray();
+            Array.Reverse(temp);
+            
+            return new string(temp);
+        }
+
+        //Modified version for InfixToPrefix
+        private string InfixToPostfix(char[] input)
+        {
+            var builder = new StringBuilder();
+            var stk = new Stack<char>();
+            foreach(var c in input)
+            {
+                if (Char.IsLetterOrDigit(c))
+                    builder.Append(c);
+                else if (c == '(')
+                    stk.Push(c);
+                else if (c == ')')
+                {
+                    while (stk.Count > 0 && stk.Peek() != '(')
+                        builder.Append(stk.Pop());
+                    stk.Pop();
+                }
+                else if(IsOperator(c))
+                {
+                    if(c == '^')
+                    {
+                        while(stk.Count > 0 && Prec(stk.Peek()) >= Prec(c)) //Here is the difference ">=" when ^
+                            builder.Append(stk.Pop());
+                        stk.Push(c);
+                    }
+                    else
+                    {
+                        while (stk.Count > 0 && Prec(stk.Peek()) > Prec(c))
+                            builder.Append(stk.Pop());
+                        stk.Push(c);
+                    }
+                }
+            }
+
+            while (stk.Count > 0)
+                builder.Append(stk.Pop());
+
+            return builder.ToString();
+        }
+
         public string InfixToPostfix(string input)
         {
             var stk = new Stack<char>();

@@ -60,6 +60,27 @@ namespace DataStructures.Stacks
             return res;
         }
 
+        public void NextGreaterElementUsingStack(int[] numbers)
+        {
+            var stk = new Stack<int>();
+            stk.Push(numbers[0]);
+
+            for(int i = 1; i < numbers.Length; i++)
+            {
+                var next = numbers[i];
+                while(stk.Count > 0 && stk.Peek() < next)
+                {
+                    var element = stk.Pop();
+                    Console.WriteLine(element + " --> " + next);
+                }
+                stk.Push(next);
+            }
+
+            while(stk.Count != 0)
+                Console.WriteLine(stk.Pop() + " --> -1");
+
+        }
+
         public string Print(int[] input)
         {
             var builder = new StringBuilder();

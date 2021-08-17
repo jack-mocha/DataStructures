@@ -15,7 +15,7 @@ namespace DataStructures
             stk.Push(18);
             stk.Push(14);
             stk.Push(-3);
-            s.SortAscRecursive(stk);
+            var stk2 = s.SortAscUseTempStack(stk);
         }
     }
 }

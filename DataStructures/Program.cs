@@ -10,11 +10,12 @@ namespace DataStructures
         {
             var s = new StackOps();
             var stk = new Stack<int>();
-            stk.Push(1);
-            stk.Push(2);
-            stk.Push(3);
-            stk.Push(4);
-            s.ReverseRecursive(stk);
+            stk.Push(30);
+            stk.Push(-5);
+            stk.Push(18);
+            stk.Push(14);
+            stk.Push(-3);
+            s.SortAscRecursive(stk);
         }
     }
 }

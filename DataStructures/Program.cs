@@ -15,7 +15,7 @@ namespace DataStructures
             stk.Push(18);
             stk.Push(14);
             stk.Push(-3);
-            var stk2 = s.SortAscUseTempStack(stk);
+            s.DeleteMid(stk, stk.Count, 0);
         }
     }
 }

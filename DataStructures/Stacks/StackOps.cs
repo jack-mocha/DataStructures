@@ -6,6 +6,18 @@ namespace DataStructures.Stacks
 {
     public class StackOps
     {
+        public void DeleteMid(Stack<int> st, int n, int curr)
+        {
+            if (st.Count == 0)
+                return;
+
+            var x = st.Pop();
+            DeleteMid(st, n, curr + 1);
+            
+            if (curr != n / 2)
+                st.Push(x);
+        }
+
         public Stack<int> SortAscUseTempStack(Stack<int> stk)
         {
             var tempStk = new Stack<int>();

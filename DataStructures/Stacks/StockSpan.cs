@@ -81,6 +81,54 @@ namespace DataStructures.Stacks
 
         }
 
+        public int[] NextGreaterElementUsingStackReverseTraversal(int[] numbers)
+        {
+            var lastIndex = numbers.Length - 1;
+            var stk = new Stack<int>();
+            stk.Push(numbers[lastIndex]);
+            var res = new int[numbers.Length];
+            res[lastIndex] = -1;
+            for(int i = numbers.Length - 2; i >=0; i--)
+            {
+                while (stk.Count > 0 && numbers[i] > stk.Peek())
+                    stk.Pop();
+
+                res[i] = stk.Count > 0 ? stk.Peek() : -1;
+                stk.Push(numbers[i]);
+            }
+
+            return res;
+        }
+
+
+        public int[] NextGreaterFrequency(int[] numbers)
+        {
+            var freq = new Dictionary<int, int>();
+            foreach(var n in numbers)
+            {
+                if (freq.ContainsKey(n))
+                    freq[n]++;
+                else
+                    freq.Add(n, 1);
+            }
+
+            var res = new int[numbers.Length];
+            res[numbers.Length - 1] = -1;
+            var stk = new Stack<int>();
+            stk.Push(numbers[numbers.Length - 1]);
+            for(int i = numbers.Length - 2; i >= 0; i--)
+            {
+                var currFreq = freq[numbers[i]];
+                while (stk.Count > 0 && currFreq >= freq[stk.Peek()])
+                    stk.Pop();
+
+                res[i] = stk.Count > 0 ? stk.Peek() : -1;
+                stk.Push(numbers[i]);
+            }
+
+            return res;
+        }
+
         public string Print(int[] input)
         {
             var builder = new StringBuilder();

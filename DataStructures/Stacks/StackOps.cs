@@ -6,6 +6,36 @@ namespace DataStructures.Stacks
 {
     public class StackOps
     {
+        public bool IsStackSortable(int[] input)
+        {
+            var stk = new Stack<int>();
+            var expected = 1;
+
+            for(int i = 0; i < input.Length; i++)
+            {
+                var front = input[i];
+                if(front == expected)
+                    expected++;
+                else
+                {
+                    if (stk.Count != 0 && stk.Peek() < front)
+                        return false;
+                    stk.Push(front);
+                }
+
+                while(stk.Count != 0 && stk.Peek() == expected)
+                {
+                    stk.Pop();
+                    expected++;
+                }
+            }
+
+            if (expected - 1 == input.Length && stk.Count == 0)
+                return true;
+
+            return false;
+        }
+
         public void DeleteMid(Stack<int> st, int n, int curr)
         {
             if (st.Count == 0)

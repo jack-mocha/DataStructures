@@ -8,14 +8,6 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            var s = new StackOps();
-            var stk = new Stack<int>();
-            stk.Push(30);
-            stk.Push(-5);
-            stk.Push(18);
-            stk.Push(14);
-            stk.Push(-3);
-            s.DeleteMid(stk, stk.Count, 0);
         }
     }
 }

@@ -6,6 +6,25 @@ namespace DataStructures.Queues
 {
     public class QueueOps
     {
+        public void InterleaveFirstAdnSecHalf(Queue<int> q)
+        {
+            var halfSize = q.Count / 2;
+            var stk = new Stack<int>();
+            for (int i = 0; i < halfSize; i++)
+                stk.Push(q.Dequeue());
+            while (stk.Count > 0)
+                q.Enqueue(stk.Pop());
+            for (int i = 0; i < halfSize; i++)
+                q.Enqueue(q.Dequeue());
+            for (int i = 0; i < halfSize; i++)
+                stk.Push(q.Dequeue());
+            while(stk.Count > 0)
+            {
+                q.Enqueue(stk.Pop());
+                q.Enqueue(q.Dequeue());
+            }
+        }
+
         public int MinIndex(Queue<int> q, int sortedIndex)
         {
             int min_index = -1;

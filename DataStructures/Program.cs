@@ -9,8 +9,8 @@ namespace DataStructures
         static void Main(string[] args)
         {
             var o = new QueueOps();
-            var q = new Queue<int>(new int[] { 1, 2, 3, 4, 5 });
-            o.ReverseFirstKElements(q, 3);
+            var q = new Queue<int>(new int[] { 11, 5, 4, 21 });
+            o.SortWithoutExtraSpace(q);
             o.Print(q);
         }
     }

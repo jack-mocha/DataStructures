@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace DataStructures.Lists
@@ -210,6 +211,60 @@ namespace DataStructures.Lists
             Console.WriteLine(p1._value);
         }
 
+        /// <summary>
+        /// This approach stores the second half of the list into a stack.
+        /// You can also store the whole list into a stack: Easier implementation, but waste more space.
+        /// 2nd approach is to reverse the second half of the list > check with the first half > reverse it back.
+        /// 3ed approach is to use recursion.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsPalindrome()
+        {
+            if (IsEmpty())
+                throw new InvalidOperationException();
+            if (_first._next == null)
+                return true;
+
+            var slow = _first;
+            var fast = _first;
+
+            while(fast._next != null && fast._next._next != null)
+            {
+                slow = slow._next;
+                fast = fast._next._next;
+            }
+
+            var stk = new Stack<Node>();
+            if(fast._next == null)
+            {
+                var current = slow._next._next;
+                while(current != null)
+                {
+                    stk.Push(current);
+                    current = current._next;
+                }
+            }
+            else
+            {
+                var current = slow._next;
+                while (current != null)
+                {
+                    stk.Push(current);
+                    current = current._next;
+                }
+            }
+
+            var node = _first;
+            while(stk.Count != 0)
+            {
+                if (stk.Pop()._value != node._value)
+                    return false;
+                node = node._next;
+            }
+
+            return true;
+        }
+
         public void PrintMiddleCleaner()
         {
             if (IsEmpty())
@@ -230,6 +285,89 @@ namespace DataStructures.Lists
                 Console.WriteLine(p1._value + ", " + p1._next._value);
         }
 
+        /// <summary>
+        /// x and y may or may not be adjacent.
+        /// Either x or y may be a head node.
+        /// Either x or y may be the last node.
+        /// x and/or y may not be present in the linked list.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public void SwapNodes(int x, int y)
+        {
+            if (IsEmpty())
+                throw new InvalidOperationException();
+
+            if (x == y)
+                return;
+
+            // Search for x (keep track of prevX and CurrX)
+            Node p1 = null, c1 = _first;
+            while (c1 != null && c1._value != x)
+            {
+                p1 = c1;
+                c1 = c1._next;
+            }
+
+            // Search for y (keep track of prevY and currY)
+            Node p2 = null, c2 = _first;
+            while (c2 != null && c2._value != y)
+            {
+                p2 = c2;
+                c2 = c2._next;
+            }
+
+            // If either x or y is not present, nothing to do
+            if (c1 == null || c2 == null)
+                return;
+
+            // If x is not head of linked list
+            if (p1 != null)
+                p1._next = c2;
+            else // make y the new head
+                _first = c2;
+
+            // If y is not head of linked list
+            if (p2 != null)
+                p2._next = c1;
+            else // make x the new head
+                _first = c1;
+
+            // Swap next pointers
+            Node temp = c1._next;
+            c1._next = c2._next;
+            c2._next = temp;
+        }
+
+        public void PairwiseSwapNode()
+        {
+            var current = _first;
+            Node previous = null;
+            while (current != null && current._next != null)
+            {
+                SwapNode(previous, current, current, current._next);
+
+                previous = current;
+                current = current._next;
+            }
+        }
+
+        private void SwapNode(Node p1, Node c1, Node p2, Node c2)
+        {
+            if (p1 == null)
+                _first = c2;
+            else
+                p1._next = c2;
+
+            if (p2 == null)
+                _first = c1;
+            else
+                p2._next = p2;
+
+            var temp = c1._next;
+            c1._next = c2._next;
+            c2._next = temp;
+        }
 
         public bool HasLoop()
         {
@@ -246,6 +384,75 @@ namespace DataStructures.Lists
             }
 
             return false;
+        }
+
+        public void SegregateEvenAndOdd()
+        {
+            var current = _first;
+            var even = new Node(-1);
+            var e1 = even;
+            var odd = new Node(-1);
+            var o1 = odd;
+            while(current != null)
+            {
+                if(current._value % 2 == 0)
+                {
+                    e1._next = current;
+                    e1 = e1._next;
+                }
+                else
+                {
+                    o1._next = current;
+                    o1 = o1._next;
+                }
+
+                current = current._next;
+            }
+
+            if(even._next != null)
+            {
+                _first = even._next;
+                e1._next = odd._next;
+                o1._next = null;
+            }
+            else
+            {
+                _first = odd._next;
+                o1._next = even._next;
+                e1._next = null;
+            }
+        }
+
+        /// <summary>
+        /// If there is a loop, start counting until the pointer reaches the same node.
+        /// </summary>
+        /// <returns></returns>
+        public int GetLengthOfLoop()
+        {
+            var slow = _first;
+            var fast = _first;
+
+            while(fast != null && fast._next != null)
+            {
+                slow = slow._next;
+                fast = fast._next._next;
+                return GetLoopeLength(slow);
+            }
+
+            return 0;
+        }
+
+        private int GetLoopeLength(Node node)
+        {
+            var current = node;
+            var count = 1;
+            while(current._next != node)
+            {
+                count++;
+                current = current._next;
+            }
+
+            return count;
         }
 
         public void Print()
@@ -359,6 +566,129 @@ namespace DataStructures.Lists
             merged._count = l1._count + l2._count;
 
             return merged;
+        }
+
+        public void RemoveDuplicatesSorted()
+        {
+            if (IsEmpty())
+                return;
+
+            var slow = _first;
+            var fast = _first._next;
+            while(fast != null)
+            {
+                if(fast._value == slow._value)
+                {
+                    while (fast != null && fast._value == slow._value) //Advance until not duplicate
+                        fast = fast._next;
+
+                    slow._next = fast;
+                    if (fast == null)
+                        return;
+                }
+
+                slow = slow._next;
+                fast = fast._next;
+            }
+        }
+
+        /// <summary>
+        /// Traverse the list. If the next is the same as current, delete next.
+        /// </summary>
+        public void RemoveDuplicatesSortedCleaner()
+        {
+            if (IsEmpty())
+                return;
+
+            var current = _first;
+            while(current != null)
+            {
+                var next = current._next;
+                if(next != null && next._value == current._value)
+                {
+                    current._next = next._next;
+                    next._next = null;
+                }
+                else
+                    current = current._next;
+            }
+        }
+
+        public void RemoveAt(int index)
+        {
+            if (IsEmpty() || index < 0 || index >= _count)
+                throw new InvalidOperationException();
+
+            if(index == 0)
+            {
+                var second = _first._next;
+                _first._next = null;
+                _first = second;
+                _count--;
+                return;
+            }
+
+            var current = _first;
+            Node prev = null;
+            for(int i = 0; i < index; i++)
+            {
+                prev = current;
+                current = current._next;
+            }
+
+            prev._next = current._next;
+            _count--;
+        }
+
+        public void Remove(int value)
+        {
+            if (IsEmpty())
+                throw new InvalidOperationException();
+
+            //when head is the target value
+            if (_first._value == value)
+            {
+                var temp = _first;
+                _first = _first._next;
+                temp._next = null;
+                _count--;
+                return;
+            }
+
+            var current = _first._next;
+            Node prev = _first;
+            while(current != null && current._value != value)
+            {
+                prev = prev._next;
+                current = current._next;
+            }
+
+            //Target Not Found
+            if (current == null)
+                return;
+
+            prev._next = current._next;
+            current._next = null;
+            _count--;
+        }
+
+        public void Insert(int index, int value)
+        {
+            if (index < 0 || index > _count)
+                throw new InvalidOperationException();
+
+            if (index == 0)
+            {
+                AddFirst(value);
+                return;
+            }
+
+            var node = new Node(value);
+            var current = _first;
+            for(int i = 0; i < index - 1; i ++)
+                current = current._next;
+            node._next = current._next;
+            current._next = node;
         }
 
         private class Node

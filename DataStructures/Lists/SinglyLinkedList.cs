@@ -105,5 +105,59 @@ namespace DataStructures.Lists
 
             Console.WriteLine(builder.ToString());
         }
+
+        public void ShiftLinkedList(int k)
+        {
+            var current = _head;
+            var count = 1;
+            while (current.Next != null) // Get the last node and calculate the count of nodes in the list.
+            {
+                current = current.Next;
+                count++;
+            }
+
+            //Another way of doing it
+            //var offset = Math.Abs(k) % count;
+            //if (offset == 0) return;
+            //var newTailPosition = k > 0 ? count - offset : offset;
+            //var newTail = _head;
+            //for (int i = 0; i < newTailPosition - 1; i++)
+            //    newTail = newTail.Next;
+
+            //var newHead = newTail.Next;
+            //newTail.Next = null;
+            //var last = current;
+            //last.Next = _head;
+            //_head = newHead;
+
+            k = k % count; // Offset K
+            if (k == 0) return;
+            var newTail = k >= 0 ? GetKthNodeFromEnd(_head, k + 1) : GetKthNodeFromEnd(_head, count + k + 1);
+            var newHead = newTail.Next;
+            newTail.Next = null;
+
+            var last = current;
+            current.Next = _head;
+
+            _head = newHead;
+        }
+
+        private Node GetKthNodeFromEnd(Node head, int k)
+        {
+            if (k == 0)
+                return head;
+
+            var p2 = head;
+            for (int i = 0; i < k - 1; i++)
+                p2 = p2.Next;
+            var p1 = head;
+            while (p2.Next != null)
+            {
+                p1 = p1.Next;
+                p2 = p2.Next;
+            }
+
+            return p1;
+        }
     }
 }

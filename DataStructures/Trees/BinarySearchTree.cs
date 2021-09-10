@@ -111,5 +111,23 @@ namespace DataStructures.Trees
             else
                 return true;
         }
+
+        public int Height()
+        {
+            return Height(_root);
+        }
+
+        //This is using post order traversal
+        private int Height(Node root)
+        {
+            if (root == null)
+                return -1;
+
+            if (root.Left == null && root.Right == null)
+                return 0;
+
+            return 1 + Math.Max(Height(root.Left), Height(root.Right)); //post-order
+        }
+
     }
 }

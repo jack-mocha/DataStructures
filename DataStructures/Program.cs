@@ -16,7 +16,8 @@ namespace DataStructures
             tree.Insert(8);
             tree.Insert(10);
             tree.Insert(11);
-            Console.WriteLine(tree.Height());
+            Console.WriteLine(tree.Min());
+
         }
     }
 }

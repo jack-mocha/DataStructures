@@ -123,11 +123,46 @@ namespace DataStructures.Trees
             if (root == null)
                 return -1;
 
-            if (root.Left == null && root.Right == null)
+            if (IsLeaf(root))
                 return 0;
 
             return 1 + Math.Max(Height(root.Left), Height(root.Right)); //post-order
         }
 
+        public int Min()
+        {
+            return Min(_root);
+        }
+
+        private int Min(Node root, int min)
+        {
+            if (root == null)
+                return min;
+
+            if (root.Value < min)
+                min = root.Value;
+
+            return Math.Min(Min(root.Left, min), Min(root.Right, min));
+        }
+
+        //Post-order traversal
+        private int Min(Node root)
+        {
+            if (root == null)
+                return Int32.MaxValue;
+
+            if (IsLeaf(root))
+                return root.Value;
+
+            var left = Min(root.Left);
+            var right = Min(root.Right);
+
+            return Math.Min(Math.Min(left, right), root.Value);
+        }
+
+        private bool IsLeaf(Node root)
+        {
+            return root.Left == null && root.Right == null;
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace DataStructures
             tree1.Insert(8);
             tree1.Insert(10);
             tree1.Insert(11);
-            tree1.TraverseLevelOrder();
+            tree1.TraverseLevelOrderUsingQueue();
             Console.WriteLine();
 
         }

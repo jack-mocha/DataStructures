@@ -249,5 +249,20 @@ namespace DataStructures.Trees
                     Console.WriteLine(value);
             }
         }
+
+        public void TraverseLevelOrderUsingQueue()
+        {
+            var queue = new Queue<Node>();
+            queue.Enqueue(_root);
+            while(queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+                Console.WriteLine(current.Value);
+                if (current.Left != null)
+                    queue.Enqueue(current.Left);
+                if (current.Right != null)
+                    queue.Enqueue(current.Right);
+            }
+        }
     }
 }

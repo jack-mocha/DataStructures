@@ -184,5 +184,19 @@ namespace DataStructures.Trees
 
             return false;
         }
+
+        public bool IsBST()
+        {
+            return IsBST(_root, Int32.MinValue, Int32.MaxValue);
+        }
+
+        //Pre-order
+        private bool IsBST(Node root, int min, int max)
+        {
+            if (root == null)
+                return true;
+
+            return (root.Value > min && root.Value < max) && IsBST(root.Left, min, root.Value) && IsBST(root.Right, root.Value, max);
+        }
     }
 }

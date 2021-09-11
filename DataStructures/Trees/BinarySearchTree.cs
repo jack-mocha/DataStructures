@@ -198,5 +198,56 @@ namespace DataStructures.Trees
 
             return (root.Value > min && root.Value < max) && IsBST(root.Left, min, root.Value) && IsBST(root.Right, root.Value, max);
         }
+
+        public void PrintNodesAtDistance(int distance)
+        {
+            PrintNodesAtDistance(_root, distance);
+        }
+
+        private void PrintNodesAtDistance(Node root, int distance)
+        {
+            if (root == null)
+                return;
+
+            if(distance == 0)
+            {
+                Console.WriteLine(root.Value);
+                return;
+            }
+
+            PrintNodesAtDistance(root.Left, distance - 1);
+            PrintNodesAtDistance(root.Right, distance - 1);
+        }
+
+        public List<int> GetNodesAtDistance(int distance)
+        {
+            var lst = new List<int>();
+            GetNodesAtDistance(_root, distance, lst);
+            return lst;
+        }
+
+        private void GetNodesAtDistance(Node root, int distance, List<int> lst)
+        {
+            if (root == null)
+                return;
+
+            if(distance == 0)
+            {
+                lst.Add(root.Value);
+                return;
+            }
+
+            GetNodesAtDistance(root.Left, distance - 1, lst);
+            GetNodesAtDistance(root.Right, distance - 1, lst);
+        }
+
+        public void TraverseLevelOrder()
+        {
+            for(var i = 0; i <= Height(); i++)
+            {
+                foreach(var value in GetNodesAtDistance(i))
+                    Console.WriteLine(value);
+            }
+        }
     }
 }

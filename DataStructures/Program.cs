@@ -16,8 +16,8 @@ namespace DataStructures
             tree1.Insert(8);
             tree1.Insert(10);
             tree1.Insert(11);
-
-            Console.WriteLine(tree1.IsBST());
+            tree1.TraverseLevelOrder();
+            Console.WriteLine();
 
         }
     }

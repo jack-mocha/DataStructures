@@ -164,5 +164,25 @@ namespace DataStructures.Trees
         {
             return root.Left == null && root.Right == null;
         }
+
+        public bool Equals(BinarySearchTree other)
+        {
+            if (other == null)
+                return false;
+
+            return Equals(_root, other._root);
+        }
+
+        //Pre-order traversal because we first compare 2 values > left > right
+        private bool Equals(Node root1, Node root2)
+        {
+            if (root1 == null && root2 == null)
+                return true;
+
+            if (root1 != null && root2 != null)
+                return root1.Value == root2.Value && Equals(root1.Left, root2.Left) && Equals(root1.Right, root2.Right);
+
+            return false;
+        }
     }
 }

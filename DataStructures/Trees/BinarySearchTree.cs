@@ -297,5 +297,18 @@ namespace DataStructures.Trees
 
             return CountLeaves(root.Left) + CountLeaves(root.Right);
         }
+
+        public int Max()
+        {
+            return Max(_root);
+        }
+
+        private int Max(Node root)
+        {
+            if (root == null)
+                return Int32.MinValue;
+
+            return Math.Max(root.Value, Math.Max(Max(root.Left), Max(root.Right)));
+        }
     }
 }

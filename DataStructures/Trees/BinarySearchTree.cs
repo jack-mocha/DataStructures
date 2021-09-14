@@ -264,5 +264,22 @@ namespace DataStructures.Trees
                     queue.Enqueue(current.Right);
             }
         }
+
+        public int Size()
+        {
+            return Size(_root);
+        }
+
+        //post-order
+        private int Size(Node root)
+        {
+            if (root == null)
+                return 0;
+
+            if (IsLeaf(root))
+                return 1;
+
+            return 1 + Size(root.Left) + Size(root.Right);
+        }
     }
 }

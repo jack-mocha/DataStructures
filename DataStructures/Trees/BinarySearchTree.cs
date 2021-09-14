@@ -326,5 +326,27 @@ namespace DataStructures.Trees
 
             return Contains(root.Left, value) || Contains(root.Right, value);
         }
+
+        public bool AreSiblings(int first, int second)
+        {
+            return AreSiblings(_root, first, second);
+        }
+
+        private bool AreSiblings(Node root, int first, int second)
+        {
+            if (root == null)
+                return false;
+
+            var areSiblings = false;
+            if (root.Left != null && root.Right != null)
+            {
+                areSiblings = (root.Left.Value == first && root.Right.Value == second) ||
+                    (root.Left.Value == second && root.Right.Value == first);
+            }
+
+            return areSiblings || 
+                AreSiblings(root.Left, first, second) || 
+                AreSiblings(root.Right, first, second);
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace DataStructures
             tree1.Insert(8);
             tree1.Insert(10);
             tree1.Insert(11);
-            Console.WriteLine(tree1.Contains(-8));
+            Console.WriteLine(tree1.AreSiblings(8, 10));
 
         }
     }

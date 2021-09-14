@@ -348,5 +348,30 @@ namespace DataStructures.Trees
                 AreSiblings(root.Left, first, second) || 
                 AreSiblings(root.Right, first, second);
         }
+
+        public List<int> GetAncestors(int value)
+        {
+            var ancestors = new List<int>();
+            GetAncestors(_root, value, ancestors);
+
+            return ancestors;
+        }
+
+        private bool GetAncestors(Node root, int value, List<int> ancestors)
+        {
+            if (root == null)
+                return false;
+
+            if (root.Value == value)
+                return true;
+
+            if(GetAncestors(root.Left, value, ancestors) || GetAncestors(root.Right, value, ancestors))
+            {
+                ancestors.Add(root.Value);
+                return true;
+            }
+
+            return false;
+        }
     }
 }

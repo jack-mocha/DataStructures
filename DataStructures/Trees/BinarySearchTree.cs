@@ -310,5 +310,21 @@ namespace DataStructures.Trees
 
             return Math.Max(root.Value, Math.Max(Max(root.Left), Max(root.Right)));
         }
+
+        public bool Contains(int value)
+        {
+            return Contains(_root, value);
+        }
+
+        private bool Contains(Node root, int value)
+        {
+            if (root == null)
+                return false;
+            
+            if (root.Value == value)
+                return true;
+
+            return Contains(root.Left, value) || Contains(root.Right, value);
+        }
     }
 }

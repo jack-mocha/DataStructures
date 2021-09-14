@@ -281,5 +281,21 @@ namespace DataStructures.Trees
 
             return 1 + Size(root.Left) + Size(root.Right);
         }
+
+        public int CountLeaves()
+        {
+            return CountLeaves(_root);
+        }
+
+        private int CountLeaves(Node root)
+        {
+            if (root == null)
+                return 0;
+
+            if (IsLeaf(root))
+                return 1;
+
+            return CountLeaves(root.Left) + CountLeaves(root.Right);
+        }
     }
 }

@@ -373,5 +373,20 @@ namespace DataStructures.Trees
 
             return false;
         }
+
+        public bool IsBalanced()
+        {
+            return IsBalanced(_root);
+        }
+
+        private bool IsBalanced(Node root)
+        {
+            if (root == null)
+                return true;
+
+            var balanceFactor = Height(root.Left) - Height(root.Right);
+
+            return Math.Abs(balanceFactor) <= 1 && IsBalanced(root.Left) && IsBalanced(root.Right);
+        }
     }
 }

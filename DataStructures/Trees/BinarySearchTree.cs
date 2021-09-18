@@ -388,5 +388,45 @@ namespace DataStructures.Trees
 
             return Math.Abs(balanceFactor) <= 1 && IsBalanced(root.Left) && IsBalanced(root.Right);
         }
+
+        //Find depth of any node
+        //Recursively traverse the tree and check if (1)Every node have both children (2) All leaves are at depth 'd'
+        public bool IsPerfect()
+        {
+            int d = findADepth(_root);
+            return isPerfectRec(_root, d, 0);
+        }
+
+        private bool isPerfectRec(Node root,
+                    int d, int level)
+        {
+            // An empty tree is perfect
+            if (root == null)
+                return true;
+
+            // If leaf node, then its depth must be same as
+            // depth of all other leaves.
+            if (root.Left == null && root.Right == null)
+                return (d == level);
+
+            // If internal node and one child is empty
+            if (root.Left == null || root.Right == null)
+                return false;
+
+            // Left and right subtrees must be perfect.
+            return isPerfectRec(root.Left, d, level + 1) &&
+                    isPerfectRec(root.Right, d, level + 1);
+        }
+
+        private int findADepth(Node node)
+        {
+            int d = -1;
+            while (node != null)
+            {
+                d++;
+                node = node.Left;
+            }
+            return d;
+        }
     }
 }

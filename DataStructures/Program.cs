@@ -7,13 +7,17 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            var heap = new Heap();
-            heap.Insert(10);
-            heap.Insert(5);
-            heap.Insert(17);
-            heap.Insert(4);
-            heap.Insert(22);
-            heap.Remove();
+            var items = new int[] { 5, 3, 10, 1, 4, 2 };
+            var heap = new HeapSort();
+            heap.SortDesc(items);
+            foreach (var i in items)
+                Console.WriteLine(i);
+
+            Console.WriteLine("==========");
+
+            heap.SortAsc(items);
+            foreach (var i in items)
+                Console.WriteLine(i);
         }
     }
 }

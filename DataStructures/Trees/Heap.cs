@@ -51,12 +51,12 @@ namespace DataStructures.Trees
 
         private bool HasLefChild(int index)
         {
-            return LeftChildIndex(index) <= _size;
+            return LeftChildIndex(index) < _size;
         }
 
         private bool HasRightChild(int index)
         {
-            return RightChildIndex(index) <= _size;
+            return RightChildIndex(index) < _size;
         }
 
         private bool IsValidParent(int index)
@@ -67,7 +67,7 @@ namespace DataStructures.Trees
             var isValid = _items[index] >= LeftChild(index);
 
             if (HasRightChild(index))
-                 isValid = _items[index] >= RightChild(index);
+                 isValid = isValid && _items[index] >= RightChild(index);
 
             return isValid;
         }

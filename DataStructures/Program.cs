@@ -7,17 +7,15 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            var items = new int[] { 5, 3, 10, 1, 4, 2 };
-            var heap = new HeapSort();
-            heap.SortDesc(items);
-            foreach (var i in items)
-                Console.WriteLine(i);
-
-            Console.WriteLine("==========");
-
-            heap.SortAsc(items);
-            foreach (var i in items)
-                Console.WriteLine(i);
+            var pq = new PriorityQueueWithHeap();
+            pq.Enqueue(10);
+            pq.Enqueue(30);
+            pq.Enqueue(20);
+            pq.Enqueue(15);
+            Console.WriteLine(pq.Dequeue());
+            Console.WriteLine(pq.Dequeue());
+            Console.WriteLine(pq.Dequeue());
+            Console.WriteLine(pq.Dequeue());
         }
     }
 }

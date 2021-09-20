@@ -33,6 +33,19 @@ namespace DataStructures.Trees
             }
         }
 
+        private bool IsValidParent(int index)
+        {
+            if (!HasLefChild(index))
+                return true;
+
+            var isValid = _items[index] >= LeftChild(index);
+
+            if (HasRightChild(index))
+                 isValid = isValid && _items[index] >= RightChild(index);
+
+            return isValid;
+        }
+
         public bool IsEmpty()
         {
             return _size == 0;
@@ -59,18 +72,6 @@ namespace DataStructures.Trees
             return RightChildIndex(index) < _size;
         }
 
-        private bool IsValidParent(int index)
-        {
-            if (!HasLefChild(index))
-                return true;
-
-            var isValid = _items[index] >= LeftChild(index);
-
-            if (HasRightChild(index))
-                 isValid = isValid && _items[index] >= RightChild(index);
-
-            return isValid;
-        }
 
         private int LeftChild(int index)
         {

@@ -9,6 +9,14 @@ namespace DataStructures.Trees
         private int[] _items = new int[10];
         private int _size;
 
+        public int Max()
+        {
+            if (IsEmpty())
+                throw new InvalidOperationException();
+
+            return _items[0];
+        }
+
         public int Remove()
         {
             if (IsEmpty())

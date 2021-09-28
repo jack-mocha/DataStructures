@@ -17,6 +17,7 @@ namespace DataStructures.Trees
             return _items[0];
         }
 
+        //O(log n)
         public int Remove()
         {
             if (IsEmpty())
@@ -101,6 +102,7 @@ namespace DataStructures.Trees
             return index * 2 + 2;
         }
 
+        //O(log n)
         public void Insert(int value)
         {
             if (IsFull())
@@ -136,6 +138,28 @@ namespace DataStructures.Trees
             var temp = _items[first];
             _items[first] = _items[second];
             _items[second] = temp;
+        }
+
+
+        public static bool IsMaxHeap(int[] items)
+        {
+            return IsMaxHeap(items, 0);
+        }
+
+        private static bool IsMaxHeap(int[] items, int index)
+        {
+            //All leaf nodes are valid
+            var lastParentIndex = items.Length / 2 - 1;
+            if (index > lastParentIndex)
+                return true;
+
+            var leftIndex = index * 2 + 1;
+            var rightIndex = index * 2 + 2;
+
+            var isValidParent = items[index] >= items[leftIndex] &&
+                items[index] >= items[rightIndex];
+
+            return isValidParent && IsMaxHeap(items, leftIndex) && IsMaxHeap(items, rightIndex);
         }
     }
 }

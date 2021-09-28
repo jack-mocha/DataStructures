@@ -145,7 +145,7 @@ namespace DataStructures.Trees
             return index * 2 + 1;
         }
 
-        private bool IsEmpty()
+        public bool IsEmpty()
         {
             return _size == 0;
         }

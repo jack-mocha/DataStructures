@@ -5,6 +5,10 @@ using System.Text;
 
 namespace DataStructures.Trees
 {
+    //Insert: O(L) where L is the length of the word.
+    //Lookup: O(L) where L is the length of the word.
+    //Delete: O(L) where L is the length of the word.
+    //Good for implementing auto completion.
     public class Trie
     {
         public static int ALPHABET_SIZE = 26;
@@ -30,14 +34,24 @@ namespace DataStructures.Trees
                 return Children.ContainsKey(ch);
             }
 
+            public bool HasChildren()
+            {
+                return !(Children.Count == 0);
+            }
+
             public void AddChild(char ch)
             {
                 Children.Add(ch, new Node(ch));
             }
 
+            public void RemoveChild(char ch)
+            {
+                Children.Remove(ch);
+            }
+
             public Node GetChild(char ch)
             {
-                return Children[ch];
+                return Children.ContainsKey(ch) ? Children[ch] : null;
             }
 
             public Node[] GetChildren()
@@ -104,6 +118,71 @@ namespace DataStructures.Trees
             
             Console.WriteLine(root.Value);
 
+        }
+
+        public void Remove(string word)
+        {
+            if (word == null)
+                return;
+
+            Remove(_root, word, 0);
+        }
+
+        private void Remove(Node root, string word, int index)
+        {
+            if(index == word.Length)
+            {
+                root.IsEndOfWord = false;
+                return;
+            }
+
+            var ch = word[index];
+            var child = root.GetChild(ch);
+            if (child == null)
+                return;
+
+            Remove(child, word, ++index);
+            if (!child.HasChildren() && !child.IsEndOfWord)
+                root.RemoveChild(ch);
+        }
+
+        public List<string> FindWords(string prefix)
+        {
+            var lastNode = FindLastNodeOf(prefix);
+            var words = new List<string>();
+            FindWords(lastNode, prefix, words);
+
+            return words;
+        }
+
+        private Node FindLastNodeOf(string prefix)
+        {
+            if (prefix == null)
+                return null;
+
+            var current = _root;
+            foreach(var c in prefix)
+            {
+                var child = current.GetChild(c);
+                if (child == null)
+                    return null;
+
+                current = child;
+            }
+
+            return current;
+        }
+
+        private void FindWords(Node root, string prefix, List<string> words)
+        {
+            if (root == null)
+                return;
+            
+            if (root.IsEndOfWord)
+                words.Add(prefix);
+
+            foreach(var child in root.GetChildren())
+                FindWords(child, prefix + child.Value, words);
         }
     }
 }

@@ -93,6 +93,27 @@ namespace DataStructures.Trees
             return current.IsEndOfWord;
         }
 
+        public bool ContainsRecursive(string word)
+        {
+            if (word == null)
+                return false;
+
+            return ContainsRecursive(_root, word, 0);
+        }
+
+        private bool ContainsRecursive(Node root, string word, int index)
+        {
+            if (index == word.Length)
+                return root.IsEndOfWord;
+
+            var ch = word[index];
+            var child = root.GetChild(ch);
+            if (child == null)
+                return false;
+
+            return ContainsRecursive(child, word, ++index);
+        }
+
         public void PreOrderTraversal()
         {
             PreOrderTraversal(_root);

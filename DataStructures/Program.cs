@@ -13,9 +13,7 @@ namespace DataStructures
             trie.Insert("care");
             trie.Insert("careful");
             trie.Insert("egg");
-            var results = trie.FindWords(null);
-            foreach(var r in results)
-                Console.WriteLine(r);
+            Console.WriteLine(trie.ContainsRecursive(null));
         }
     }
 }

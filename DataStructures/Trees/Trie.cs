@@ -205,5 +205,37 @@ namespace DataStructures.Trees
             foreach(var child in root.GetChildren())
                 FindWords(child, prefix + child.Value, words);
         }
+
+        public int CountWords()
+        {
+            return CountWords(_root, 0);
+        }
+
+        private int CountWords(Node root, int count)
+        {
+            foreach(var child in root.GetChildren())
+            {
+                count = CountWords(child, count);
+            }
+
+            if (root.IsEndOfWord)
+                return count + 1;
+            else
+                return count;
+        }
+
+        private int CountWords2(Node root)
+        {
+            var total = 0;
+
+            if (root.IsEndOfWord)
+                total++;
+
+            foreach (var child in root.GetChildren())
+                total += CountWords2(child);
+
+            return total;
+        }
+
     }
 }

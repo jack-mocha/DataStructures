@@ -237,5 +237,18 @@ namespace DataStructures.Trees
             return total;
         }
 
+        public void PrintWords()
+        {
+            PrintWords(_root, "");
+        }
+
+        private void PrintWords(Node root, string word)
+        {
+            if(root.IsEndOfWord)
+                Console.WriteLine(word);
+
+            foreach (var child in root.GetChildren())
+                PrintWords(child, word + child.Value);
+        }
     }
 }

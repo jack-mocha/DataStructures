@@ -11,8 +11,6 @@ namespace DataStructures.Trees
     //Good for implementing auto completion.
     public class Trie
     {
-        public static int ALPHABET_SIZE = 26;
-
         private class Node
         {
             public Dictionary<char, Node> Children = new Dictionary<char, Node>();
@@ -249,6 +247,67 @@ namespace DataStructures.Trees
 
             foreach (var child in root.GetChildren())
                 PrintWords(child, word + child.Value);
+        }
+
+        // Reference from Mosh Hamedani:
+        // We add these words to a trie and walk down
+        // the trie. If a node has more than one child,
+        // that's where these words deviate. Try this
+        // with "can", "canada", "care" and "cab". You'll
+        // see that these words deviate after "ca".
+        //
+        // So, we keep walking down the tree as long as
+        // the current node has only one child.
+        //
+        // One edge cases we need to count is when two
+        // words are in the same branch and don't deviate.
+        // For example "can" and "canada". In this case,
+        // we keep walking down to the end because every
+        // node (except the last node) has only one child.
+        // But the longest common prefix here should be
+        // "can", not "canada". So, we should find the
+        // shortest word in the list first. The maximum
+        // number of characters we can include in the
+        // prefix should be equal to the length of the
+        // shortest word.
+        public static string LongestCommonPrefix(string[] words)
+        {
+            if (words == null || words.Length == 0)
+                return string.Empty;
+
+            var trie = new Trie();
+            foreach (var word in words)
+                trie.Insert(word);
+
+            var prefix = new StringBuilder();
+            var maxChars = GetShortest(words).Length;
+            var current = trie._root;
+            while(prefix.Length < maxChars)
+            {
+                var children = current.GetChildren();
+                if (children.Length != 1)
+                    break;
+
+                current = children[0];
+                prefix.Append(current.Value);
+            }
+
+            return prefix.ToString();
+        }
+
+        private static string GetShortest(string[] words)
+        {
+            if (words == null || words.Length == 0)
+                return string.Empty;
+
+            var shortest = words[0];
+            foreach(var word in words)
+            {
+                if (word.Length < shortest.Length)
+                    shortest = word;
+            }
+
+            return shortest;
         }
     }
 }

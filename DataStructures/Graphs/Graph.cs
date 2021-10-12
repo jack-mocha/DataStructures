@@ -4,6 +4,8 @@ using System.Text;
 
 namespace DataStructures.Graphs
 {
+    //In Graph, it is possible to visit the same node.
+    //Depending on where you start the traversal, you may not visit every node in the graph.
     public class Graph
     {
         private class Node
@@ -99,6 +101,33 @@ namespace DataStructures.Graphs
             {
                 if (!visited.Contains(n))
                     TraverseDepthFirstRecursive(n, visited);
+            }
+        }
+
+        //Note that the sequence of which node is visited is different from the recursive method, because of the stack.
+        public void TraverseDepthFirstIterative(string label)
+        {
+            Node root;
+            if (!_nodes.TryGetValue(label, out root))
+                return;
+
+            var visited = new HashSet<Node>();
+            var stk = new Stack<Node>();
+            stk.Push(root);
+            while(stk.Count > 0)
+            {
+                var current = stk.Pop();
+                if (visited.Contains(current))
+                    continue;
+
+                Console.WriteLine(current.Label);
+                visited.Add(current);
+
+                foreach(var neighbor in _adjacencyList[current])
+                {
+                    if (!visited.Contains(neighbor))
+                        stk.Push(neighbor);
+                }
             }
         }
 

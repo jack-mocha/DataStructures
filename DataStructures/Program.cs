@@ -17,7 +17,7 @@ namespace DataStructures
             graph.AddEdge("B", "D");
             graph.AddEdge("D", "C");
             graph.Print();
-            graph.TraverseDepthFirstRecursive("A");
+            graph.TraverseDepthFirstIterative("A");
         }
     }
 }

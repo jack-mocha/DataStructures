@@ -11,11 +11,13 @@ namespace DataStructures
             graph.AddNode("A");
             graph.AddNode("B");
             graph.AddNode("C");
+            graph.AddNode("D");
             graph.AddEdge("A", "B");
             graph.AddEdge("A", "C");
-            graph.RemoveNode("A");
-            graph.AddEdge("B", "C");
+            graph.AddEdge("B", "D");
+            graph.AddEdge("D", "C");
             graph.Print();
+            graph.TraverseDepthFirstRecursive("A");
         }
     }
 }

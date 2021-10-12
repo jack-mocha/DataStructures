@@ -80,6 +80,28 @@ namespace DataStructures.Graphs
             }
         }
 
+        public void TraverseDepthFirstRecursive(string label)
+        {
+            Node node;
+            if (!_nodes.TryGetValue(label, out node))
+                return;
+
+            var visited = new HashSet<Node>();
+            TraverseDepthFirstRecursive(node, visited);
+        }
+
+        private void TraverseDepthFirstRecursive(Node node, HashSet<Node> visited)
+        {
+            Console.WriteLine(node.Label);
+            visited.Add(node);
+
+            foreach (var n in _adjacencyList[node])
+            {
+                if (!visited.Contains(n))
+                    TraverseDepthFirstRecursive(n, visited);
+            }
+        }
+
         private string NodesToString(List<Node> nodes)
         {
             var sb = new StringBuilder();

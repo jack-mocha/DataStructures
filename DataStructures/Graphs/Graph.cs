@@ -46,14 +46,54 @@ namespace DataStructures.Graphs
             _adjacencyList[fromNode].Add(toNode);
         }
 
+        public void RemoveNode(string label)
+        {
+            Node node;
+            if (!_nodes.TryGetValue(label, out node))
+                return;
+            foreach (var key in _adjacencyList.Keys)
+                _adjacencyList[key].Remove(node);
+
+            _adjacencyList.Remove(node);
+            _nodes.Remove(label);
+        }
+
+        public void RemoveEdge(string from, string to)
+        {
+            Node fromNode;
+            Node toNode;
+            if (!_nodes.TryGetValue(from, out fromNode))
+                return;
+            if (!_nodes.TryGetValue(to, out toNode))
+                return;
+
+            _adjacencyList[fromNode].Remove(toNode);
+        }
+
         public void Print()
         {
             foreach(var source in _adjacencyList.Keys)
             {
                 var targets = _adjacencyList[source];
                 if(targets.Count > 0)
-                    Console.WriteLine(source + " is connected to " + targets);
+                    Console.WriteLine(source + " is connected to " + NodesToString(targets));
             }
+        }
+
+        private string NodesToString(List<Node> nodes)
+        {
+            var sb = new StringBuilder();
+            sb.Append("[");
+            for(int i = 0; i < nodes.Count; i++)
+            {
+                sb.Append(nodes[i].Label);
+                if (i != nodes.Count - 1)
+                    sb.Append(", ");
+                else
+                    sb.Append("]");
+            }
+
+            return sb.ToString();
         }
     }
 }

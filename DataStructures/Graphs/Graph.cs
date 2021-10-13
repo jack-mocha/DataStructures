@@ -131,6 +131,34 @@ namespace DataStructures.Graphs
             }
         }
 
+        //The implementation is the same as TraverseDepthFirstIterative() except that instead of using a stack, we use a queue.
+        //This will change the traversal order, which makes it breadth first.
+        public void TraversBreadthFirst(string label)
+        {
+            Node root;
+            if (!_nodes.TryGetValue(label, out root))
+                return;
+
+            var visited = new HashSet<Node>();
+            var queue = new Queue<Node>();
+            queue.Enqueue(root);
+            while(queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+                if (visited.Contains(current))
+                    continue;
+
+                Console.WriteLine(current.Label);
+                visited.Add(current);
+
+                foreach(var neighbor in _adjacencyList[current])
+                {
+                    if(!visited.Contains(neighbor))
+                        queue.Enqueue(neighbor);
+                }
+            }
+        }
+
         private string NodesToString(List<Node> nodes)
         {
             var sb = new StringBuilder();

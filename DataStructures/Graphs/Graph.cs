@@ -159,6 +159,40 @@ namespace DataStructures.Graphs
             }
         }
 
+        //1. Traverse depth first on every node
+        //2. Push the node, whose neighbors are all visited, to a stack.
+        //3. Pop the stack and add it to the list to get the reverse order.
+        public List<string> TopologicalSort()
+        {
+            var stack = new Stack<Node>();
+            var visited = new HashSet<Node>();
+            foreach (var node in _nodes.Values)
+                TopologicalSort(node, visited, stack);
+
+            var result = new List<string>();
+            while (stack.Count > 0)
+                result.Add(stack.Pop().Label);
+
+            return result;
+        }
+
+        //Note that this is very similar to depth first traversal recursive
+        //The only differences are:
+        //1. Check visited in the beginning of the function
+        //2. Push the node to the stack when its neighbors are all visited.
+        private void TopologicalSort(Node node, HashSet<Node> visited, Stack<Node> stack)
+        {
+            if (visited.Contains(node))
+                return;
+
+            visited.Add(node);
+
+            foreach(var neighbor in _adjacencyList[node])
+                TopologicalSort(neighbor, visited, stack);
+
+            stack.Push(node);
+        }
+
         private string NodesToString(List<Node> nodes)
         {
             var sb = new StringBuilder();

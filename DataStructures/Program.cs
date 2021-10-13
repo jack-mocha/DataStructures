@@ -8,16 +8,18 @@ namespace DataStructures
         static void Main(string[] args)
         {
             var graph = new Graph();
+            graph.AddNode("X");
             graph.AddNode("A");
             graph.AddNode("B");
-            graph.AddNode("C");
-            graph.AddNode("D");
-            graph.AddEdge("A", "B");
-            graph.AddEdge("A", "C");
-            graph.AddEdge("B", "D");
-            graph.AddEdge("D", "C");
+            graph.AddNode("P");
+            graph.AddEdge("X", "A");
+            graph.AddEdge("X", "B");
+            graph.AddEdge("A", "P");
+            graph.AddEdge("B", "P");
             graph.Print();
-            graph.TraversBreadthFirst("A");
+            var result = graph.TopologicalSort();
+            foreach(var r in result)
+                Console.WriteLine(r);
         }
     }
 }

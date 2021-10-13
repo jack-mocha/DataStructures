@@ -193,6 +193,48 @@ namespace DataStructures.Graphs
             stack.Push(node);
         }
 
+        public bool HasCycle()
+        {
+            var all = new HashSet<Node>(_nodes.Values);
+            var visiting = new HashSet<Node>();
+            var visited = new HashSet<Node>();
+            while(all.Count > 0)
+            {
+                var em = all.GetEnumerator();
+                em.MoveNext(); //Iniitially, the enumerator is positioned before the first element in the collection, you need to MoveNext() to the first element.
+                var current = em.Current;
+                if (HasCycle(current, all, visiting, visited))
+                    return true;
+            }
+
+            return false;
+        }
+
+        //Depth First traverse
+        private bool HasCycle(Node node, HashSet<Node> all, HashSet<Node> visiting, HashSet<Node> visited)
+        {
+            all.Remove(node);
+            visiting.Add(node);
+
+            foreach(var neighbor in _adjacencyList[node])
+            {
+                if (visited.Contains(neighbor))
+                    continue;
+
+                //Detect cycle
+                if (visiting.Contains(neighbor))
+                    return true;
+
+                if (HasCycle(neighbor, all, visiting, visited))
+                    return true;
+            }
+
+            visiting.Remove(node);
+            visited.Add(node);
+
+            return false;
+        }
+
         private string NodesToString(List<Node> nodes)
         {
             var sb = new StringBuilder();

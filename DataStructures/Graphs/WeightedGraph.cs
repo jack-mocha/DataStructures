@@ -10,6 +10,9 @@ namespace DataStructures.Graphs
         {
             public string Label { get; private set; }
 
+            //This is equivalent to a conceptual adjacencyList like the one in the Graph class.
+            private List<Edge> _edges = new List<Edge>();
+
             public Node(string label)
             {
                 this.Label = label;
@@ -18,6 +21,16 @@ namespace DataStructures.Graphs
             public override string ToString()
             {
                 return this.Label;
+            }
+
+            public void AddEdge(Node to, int weight)
+            {
+                _edges.Add(new Edge(this, to, weight));
+            }
+
+            public List<Edge> GetEdges()
+            {
+                return _edges;
             }
         }
 
@@ -41,17 +54,10 @@ namespace DataStructures.Graphs
         }
 
         private Dictionary<string, Node> _nodes = new Dictionary<string, Node>();
-        private Dictionary<Node, List<Edge>> _adjacencyList = new Dictionary<Node, List<Edge>>();
 
-        //Same as directed graph.
         public void AddNode(string label)
         {
-            var node = new Node(label);
-            if (!_nodes.ContainsKey(label))
-                _nodes.Add(label, node);
-            
-            if(!_adjacencyList.ContainsKey(node))
-                _adjacencyList.Add(node, new List<Edge>());
+            _nodes.TryAdd(label, new Node(label));
         }
 
         //Because this is an undirected graph, you need to add the edge to both fromNode and toNode in the adjacencyList.
@@ -64,17 +70,17 @@ namespace DataStructures.Graphs
             if (!_nodes.TryGetValue(to, out toNode))
                 throw new InvalidOperationException();
 
-            _adjacencyList[fromNode].Add(new Edge(fromNode, toNode, weight));
-            _adjacencyList[toNode].Add(new Edge(toNode, fromNode, weight));
+            fromNode.AddEdge(toNode, weight);
+            toNode.AddEdge(fromNode, weight);
         }
 
         public void Print()
         {
-            foreach (var source in _adjacencyList.Keys)
+            foreach (var node in _nodes.Values)
             {
-                var targets = _adjacencyList[source];
-                if (targets.Count > 0)
-                    Console.WriteLine(source + " is connected to " + EdgesToString(targets));
+                var edges = node.GetEdges();
+                if (edges.Count > 0)
+                    Console.WriteLine(node + " is connected to " + EdgesToString(edges));
             }
         }
 

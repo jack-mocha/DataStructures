@@ -8,15 +8,13 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            var graph = new Graph();
+            var graph = new WeightedGraph();
             graph.AddNode("A");
             graph.AddNode("B");
             graph.AddNode("C");
-            graph.AddEdge("A", "B");
-            graph.AddEdge("B", "C");
-            graph.AddEdge("C", "A");
+            graph.AddEdge("A", "B", 3);
+            graph.AddEdge("A", "C", 2);
             graph.Print();
-            Console.WriteLine(graph.HasCycle());
         }
     }
 }

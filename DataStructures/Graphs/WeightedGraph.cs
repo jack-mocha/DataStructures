@@ -110,7 +110,9 @@ namespace DataStructures.Graphs
             distances[fromNode] = 0;
 
             var visited = new HashSet<Node>();
-            var pq = new SortedSet<NodeEntry>(new ByNodePriority());
+            //Originally meant to be using priority queue, but pq is introduced in .NET 6.0 RC1.
+            //Sort of low to high. The lower the value the higher the priority.
+            var pq = new SortedSet<NodeEntry>(new ByNodePriority()); 
             pq.Add(new NodeEntry(fromNode, 0));
             while (pq.Count > 0)
             {
@@ -120,7 +122,7 @@ namespace DataStructures.Graphs
 
                 foreach(var edge in current.GetEdges())
                 {
-                    if (visited.Contains(edge.To))
+                    if (visited.Contains(edge.To)) //because there are (1)undirected path (2)priority queue
                         continue;
 
                     var newDistance = distances[current] + edge.Weight;

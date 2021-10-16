@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace DataStructures.Graphs
@@ -31,6 +32,26 @@ namespace DataStructures.Graphs
             public List<Edge> GetEdges()
             {
                 return _edges;
+            }
+        }
+
+        private class NodeEntry
+        {
+            public Node Node { get; private set; }
+            public int Priority { get; private set; }
+
+            public NodeEntry(Node node, int priority)
+            {
+                this.Node = node;
+                this.Priority = priority;
+            }
+        }
+
+        private class ByNodePriority : IComparer<NodeEntry>
+        {
+            public int Compare(NodeEntry x, NodeEntry y)
+            {
+                return x.Priority.CompareTo(y.Priority);
             }
         }
 
@@ -72,6 +93,108 @@ namespace DataStructures.Graphs
 
             fromNode.AddEdge(toNode, weight);
             toNode.AddEdge(fromNode, weight);
+        }
+
+        public int GetShortestDistance(string from, string to)
+        {
+            Node fromNode;
+            Node toNode;
+            if (!_nodes.TryGetValue(from, out fromNode))
+                throw new InvalidOperationException();
+            if (!_nodes.TryGetValue(to, out toNode))
+                throw new InvalidOperationException();
+
+            var distances = new Dictionary<Node, int>();
+            foreach(var node in _nodes.Values)
+                distances.Add(node, Int32.MaxValue);
+            distances[fromNode] = 0;
+
+            var visited = new HashSet<Node>();
+            var pq = new SortedSet<NodeEntry>(new ByNodePriority());
+            pq.Add(new NodeEntry(fromNode, 0));
+            while (pq.Count > 0)
+            {
+                var current = pq.Min.Node;
+                pq.Remove(pq.Min); 
+                visited.Add(current);
+
+                foreach(var edge in current.GetEdges())
+                {
+                    if (visited.Contains(edge.To))
+                        continue;
+
+                    var newDistance = distances[current] + edge.Weight;
+                    if(newDistance < distances[edge.To])
+                    {
+                        distances[edge.To] = newDistance;
+                        pq.Add(new NodeEntry(edge.To, newDistance));
+                    }
+                }
+            }
+
+            return distances[toNode];
+        }
+
+        public Path GetShortestPath(string from, string to)
+        {
+            Node fromNode;
+            Node toNode;
+            if (!_nodes.TryGetValue(from, out fromNode))
+                throw new InvalidOperationException();
+            if (!_nodes.TryGetValue(to, out toNode))
+                throw new InvalidOperationException();
+
+            var distances = new Dictionary<Node, int>();
+            foreach (var node in _nodes.Values)
+                distances.Add(node, Int32.MaxValue);
+            distances[fromNode] = 0;
+
+            var previousNodes = new Dictionary<Node, Node>();
+            foreach (var node in _nodes.Values)
+                previousNodes.Add(node, null);
+
+            var visited = new HashSet<Node>();
+            var pq = new SortedSet<NodeEntry>(new ByNodePriority());
+            pq.Add(new NodeEntry(fromNode, 0));
+            while (pq.Count > 0)
+            {
+                var current = pq.Min.Node;
+                pq.Remove(pq.Min);
+                visited.Add(current);
+
+                foreach (var edge in current.GetEdges())
+                {
+                    if (visited.Contains(edge.To))
+                        continue;
+
+                    var newDistance = distances[current] + edge.Weight;
+                    if (newDistance < distances[edge.To])
+                    {
+                        distances[edge.To] = newDistance;
+                        pq.Add(new NodeEntry(edge.To, newDistance));
+                        previousNodes[edge.To] = current;
+                    }
+                }
+            }
+
+            return BuildPath(previousNodes, toNode);
+        }
+
+        private Path BuildPath(Dictionary<Node,Node> previousNodes, Node toNode)
+        {
+            var stk = new Stack<Node>();
+            stk.Push(toNode);
+            var previous = previousNodes[toNode];
+            while (previous != null)
+            {
+                stk.Push(previous);
+                previous = previousNodes[previous];
+            }
+            var path = new Path();
+            while (stk.Count > 0)
+                path.Nodes.Add(stk.Pop().Label);
+
+            return path;
         }
 
         public void Print()

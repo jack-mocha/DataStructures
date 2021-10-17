@@ -95,6 +95,8 @@ namespace DataStructures.Graphs
             toNode.AddEdge(fromNode, weight);
         }
 
+        //Dijkstra's shortest path: Only works on graph that has non-negative weight. Has cycle is fine.
+        //Greedy Approach
         public int GetShortestDistance(string from, string to)
         {
             Node fromNode;
@@ -197,6 +199,37 @@ namespace DataStructures.Graphs
                 path.Nodes.Add(stk.Pop().Label);
 
             return path;
+        }
+
+        public bool HasCycle()
+        {
+            var visited = new HashSet<Node>();
+            foreach(var node in _nodes.Values)
+            {
+                if (!visited.Contains(node) && HasCycle(node, null, visited))
+                    return true;
+            }
+
+            return false;
+        }
+
+        //Since there is no direction, you only need the visited set to check if any node's neighbor is already visited, which also means there is a cycle.
+        private bool HasCycle(Node node, Node parent, HashSet<Node> visited)
+        {
+            visited.Add(node);
+            foreach(var edge in node.GetEdges())
+            {
+                if (edge.To == parent) //This is where we came from.
+                    continue;
+
+                if (visited.Contains(edge.To))
+                    return true;
+
+                if (HasCycle(edge.To, node, visited))
+                    return true;
+            }
+
+            return false;
         }
 
         public void Print()

@@ -12,11 +12,15 @@ namespace DataStructures
             graph.AddNode("A");
             graph.AddNode("B");
             graph.AddNode("C");
-            graph.AddEdge("A", "B", 0);
-            graph.AddEdge("B", "C", 0);
-            graph.AddEdge("A", "C", 0);
+            graph.AddNode("D");
+            graph.AddEdge("A", "B", 3);
+            graph.AddEdge("B", "D", 4);
+            graph.AddEdge("C", "D", 5);
+            graph.AddEdge("A", "C", 1);
+            graph.AddEdge("B", "C", 2);
             graph.Print();
-            Console.WriteLine(graph.HasCycle());
+            var tree = graph.GetMinimumSpanningTree();
+            tree.Print();
         }
     }
 }

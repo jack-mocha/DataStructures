@@ -55,6 +55,14 @@ namespace DataStructures.Graphs
             }
         }
 
+        private class ByEdgeWeight : IComparer<Edge>
+        {
+            public int Compare(Edge x, Edge y)
+            {
+                return x.Weight.CompareTo(y.Weight);
+            }
+        }
+
         private class Edge
         {
             public Node From { get; private set; }
@@ -230,6 +238,74 @@ namespace DataStructures.Graphs
             }
 
             return false;
+        }
+
+        //Prim's Algorithm: Minimum Spanning Tree
+        //Greedy
+        public WeightedGraph GetMinimumSpanningTree()
+        {
+            var tree = new WeightedGraph();
+            if (_nodes.Count == 0)
+                return tree;
+
+            var edges = new SortedSet<Edge>(new ByEdgeWeight());
+            var startNode = GetFirstNode();
+            AddEdges(startNode, edges);
+            tree.AddNode(startNode.Label); //This node is an new object.
+
+            if (edges.Count == 0)
+                return tree;
+
+            while(tree._nodes.Count < _nodes.Count)
+            {
+                var minEdge = PopMinEdge(edges);
+                var nextNode = minEdge.To;
+                if (tree.ContainsNode(nextNode.Label))
+                    continue;
+
+                tree.AddNode(nextNode.Label);
+                tree.AddEdge(minEdge.From.Label, nextNode.Label, minEdge.Weight);
+
+                foreach(var edge in nextNode.GetEdges())
+                {
+                    if (!tree.ContainsNode(edge.To.Label))
+                        edges.Add(edge);
+                }
+            }
+
+            return tree;
+        }
+
+        public bool ContainsNode(string label)
+        {
+            return _nodes.ContainsKey(label);
+        }
+
+        private Edge PopMinEdge(SortedSet<Edge> edges)
+        {
+            var em = edges.GetEnumerator();
+            em.MoveNext();
+            var minEdge = em.Current;
+            edges.Remove(minEdge);
+
+            return minEdge;
+        }
+
+        private void AddEdges(Node node, SortedSet<Edge> edges)
+        {
+            foreach (var e in node.GetEdges())
+                edges.Add(e);
+        }
+
+        private Node GetFirstNode()
+        {
+            if (_nodes.Count == 0)
+                return null;
+
+            var em = _nodes.Values.GetEnumerator();
+            em.MoveNext();
+
+            return em.Current;
         }
 
         public void Print()

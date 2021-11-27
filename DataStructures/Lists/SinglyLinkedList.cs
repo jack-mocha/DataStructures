@@ -180,7 +180,7 @@ namespace DataStructures.Lists
             while (result && p2 != null)
             {
                 if (p1.Data != p2.Data)
-                    return false;
+                    result = false;
 
                 p1 = p1.Next;
                 p2 = p2.Next;

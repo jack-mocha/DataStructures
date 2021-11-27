@@ -159,5 +159,65 @@ namespace DataStructures.Lists
 
             return p1;
         }
+
+
+        public void Reverse()
+        {
+            _head = Reverse(_head.Next.Next);
+        }
+
+        public bool IsPalindrome()
+        {
+            if (_head == null)
+                return true;
+
+            var firstHalfEnd = EndOfFirstHalf();
+            var secondHalfStart = Reverse(firstHalfEnd.Next);
+
+            var p1 = _head;
+            var p2 = secondHalfStart;
+            var result = true;
+            while (result && p2 != null)
+            {
+                if (p1.Data != p2.Data)
+                    return false;
+
+                p1 = p1.Next;
+                p2 = p2.Next;
+            }
+
+            Reverse(secondHalfStart); //Either this or the below is fine, because firstHalfEnd.Next is always attached.
+            //firstHalfEnd.Next = Reverse(secondHalfStart);
+
+            return result;
+        }
+
+        private Node Reverse(Node head)
+        {
+            Node prev = null;
+            var current = head;
+            while (current != null)
+            {
+                var next = current.Next;
+                current.Next = prev;
+                prev = current;
+                current = next;
+            }
+
+            return prev;
+        }
+
+        private Node EndOfFirstHalf()
+        {
+            var fast = _head;
+            var slow = _head;
+            while (fast.Next != null && fast.Next.Next != null)
+            {
+                fast = fast.Next.Next;
+                slow = slow.Next;
+            }
+
+            return slow;
+        }
     }
 }

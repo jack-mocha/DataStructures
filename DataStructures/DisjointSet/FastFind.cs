@@ -3,20 +3,24 @@ namespace DataStructures.DisjointSet
 {
     public class FastFind
     {
-        private int[] _vertices;
+        //The index of _roots represents the vertex
+        //The value of _roots represents the root of the veretex
+        private int[] _roots;
         public FastFind(int size)
         {
-            _vertices = new int[size];
-            for (int i = 0; i < _vertices.Length; i++)
-                _vertices[i] = i;
+            _roots = new int[size];
+            for (int i = 0; i < _roots.Length; i++)
+                _roots[i] = i;
         }
 
         //Time: O(1)
         public int Find(int x)
         {
-            return _vertices[x];
+            return _roots[x];
         }
 
+        //Every time rootX and rootY are different roots, we pick one and update all vertices that have the other one as root.
+        //Here we always pick rootX.
         //Time: O(N)
         public void Union(int x, int y)
         {
@@ -24,9 +28,9 @@ namespace DataStructures.DisjointSet
             var rootY = Find(y);
             if (rootX != rootY)
             {
-                for (int i = 0; i < _vertices.Length; i++)
-                    if (_vertices[i] == rootY)
-                        _vertices[i] = rootX;
+                for (int i = 0; i < _roots.Length; i++)
+                    if (_roots[i] == rootY)
+                        _roots[i] = rootX;
             }
         }
 

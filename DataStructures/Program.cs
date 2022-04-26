@@ -7,7 +7,7 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            var uf = new FastFind(10);
+            var uf = new FastUnion(10);
             uf.Union(0, 1);
             uf.Union(0, 2);
             uf.Union(1, 3);

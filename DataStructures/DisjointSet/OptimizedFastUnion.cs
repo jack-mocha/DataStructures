@@ -14,7 +14,7 @@ namespace DataStructures.DisjointSet
                 _roots[i] = i;
         }
 
-        //Time: O(α(N)) is regarded as O(1)O(1) on average. α refers to the Inverse Ackermann function. In practice, we assume it's a constant. 
+        //Time: O(α(N)) is regarded as O(1) on average. α refers to the Inverse Ackermann function. In practice, we assume it's a constant. 
         //Path Compression
         public int Find(int x)
         {

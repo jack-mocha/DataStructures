@@ -7,20 +7,31 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            var uf = new OptimizedFastUnion(10);
-            uf.Union(0, 1);
-            uf.Union(0, 2);
-            uf.Union(1, 3);
-
-            uf.Union(4, 8);
-            uf.Union(5, 6);
-            uf.Union(5, 7);
-
-            Console.WriteLine(uf.IsConnected(0, 3));
-            Console.WriteLine(uf.IsConnected(0, 4));
-            Console.WriteLine(uf.IsConnected(0, 9));
-            uf.Union(1, 8);
-            Console.WriteLine(uf.IsConnected(3, 8));
+            var alg = new FindProvinces();
+            var arr = new int[15][] {
+                new int[] { 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                new int[] { 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                new int[] { 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                new int[] { 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                new int[] { 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 },
+                new int[] { 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0 },
+                new int[] { 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0 },
+                new int[] { 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 },
+                new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 },
+                new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
+                new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 },
+                new int[] { 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1 },
+                new int[] { 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0 },
+                new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 },
+                new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1 } };
+            //for(int i = 0; i < arr.Length; i++)
+            //{
+            //    for(int j = 0; j < arr[0].Length; j++)
+            //        if(arr[i][j] == 1)
+            //            Console.WriteLine($"({i}, {j})");
+            //}
+            var res = alg.Execute(arr);
+            Console.WriteLine(res);
         }
     }
 }

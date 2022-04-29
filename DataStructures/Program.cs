@@ -8,6 +8,7 @@ namespace DataStructures
         static void Main(string[] args)
         {
             var alg = new ValidTree();
+            //No cycle
             var arr = new int[4][] {
                 new int[] {0,1},
                 new int[] {0,2},
@@ -24,7 +25,7 @@ namespace DataStructures
                 new int[] {2,3}
             };
 
-            var res = alg.Execute(5, arr2);
+            var res = alg.Execute(5, arr);
             Console.WriteLine(res);
         }
     }

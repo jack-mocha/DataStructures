@@ -7,25 +7,24 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            var alg = new FindProvinces();
-            var arr = new int[15][] {
-                new int[] { 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                new int[] { 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                new int[] { 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                new int[] { 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                new int[] { 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 },
-                new int[] { 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0 },
-                new int[] { 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0 },
-                new int[] { 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 },
-                new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 },
-                new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
-                new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 },
-                new int[] { 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1 },
-                new int[] { 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0 },
-                new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 },
-                new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1 } };
+            var alg = new ValidTree();
+            var arr = new int[4][] {
+                new int[] {0,1},
+                new int[] {0,2},
+                new int[] {0,4},
+                new int[] {4,3}
+            };
 
-            var res = alg.Execute(arr);
+            //Has cycle
+            var arr2 = new int[5][] {
+                new int[] {0,1},
+                new int[] {0,2},
+                new int[] {0,4},
+                new int[] {4,3},
+                new int[] {2,3}
+            };
+
+            var res = alg.Execute(5, arr2);
             Console.WriteLine(res);
         }
     }

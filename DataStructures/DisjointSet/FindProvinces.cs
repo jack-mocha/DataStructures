@@ -46,8 +46,8 @@ namespace DataStructures.DisjointSet
             //Union by rank
             public void Union(int x, int y)
             {
-                var rootX = _roots[x];
-                var rootY = _roots[y];
+                var rootX = Find(x);
+                var rootY = Find(y);
                 if (rootX != rootY)
                 {
                     if (_ranks[rootX] > _ranks[rootY])
@@ -64,13 +64,11 @@ namespace DataStructures.DisjointSet
 
             public int CountGroups()
             {
-                foreach (var r in _roots)
-                    Console.WriteLine(r);
                 var set = new HashSet<int>();
                 for (int i = 0; i < _roots.Length; i++)
                 {
-                    Find(i);
-                    set.Add(_roots[i]);
+                    var root = Find(i); //To update all parents to their roots
+                    set.Add(root);
                 }
 
                 return set.Count;
